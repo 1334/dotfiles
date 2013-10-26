@@ -1,5 +1,5 @@
 set nocompatible               " be iMproved
-filetype off                   " required!
+filetype off                   " required for vundle
 
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
@@ -9,6 +9,8 @@ Bundle 'gmarik/vundle'
 
 Bundle 'kien/ctrlp.vim'
 Bundle 'tpope/vim-fugitive'
+Bundle 'vim-ruby/vim-ruby'
+
 " original repos on github
 " Bundle 'tpope/vim-fugitive'
 " vim-scripts repos
