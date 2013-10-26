@@ -1,0 +1,289 @@
+set nocompatible               " be iMproved
+filetype off                   " required!
+
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+" let Vundle manage Vundle
+Bundle 'gmarik/vundle'
+
+" original repos on github
+" Bundle 'tpope/vim-fugitive'
+" vim-scripts repos
+" Bundle 'L9'
+" non github repos
+" Bundle 'git://git.wincent.com/command-t.git'
+" Bundle 'file:///Users/gmarik/path/to/plugin'
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" BASIC EDITING CONFIGURATION
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+filetype plugin indent on         " Turn on file type detection.
+syntax enable                     " Turn on syntax highlighting.
+
+runtime macros/matchit.vim        " Load the matchit plugin.
+
+set showcmd                       " Display incomplete commands.
+set showmode                      " Display the mode you're in.
+
+set backspace=indent,eol,start    " Intuitive backspacing.
+
+set hidden                        " Handle multiple buffers better.
+
+set history=10000                 " remember more commands and search history
+
+set wildmenu                      " Enhanced command line completion.
+set wildmode=list:longest         " Complete files like a shell.
+
+set ignorecase                    " Case-insensitive searching.
+set smartcase                     " But case-sensitive if expression contains a capital letter.
+
+set number                        " Show line numbers.
+set ruler                         " Show cursor position.
+
+set incsearch                     " Highlight matches as you type.
+set hlsearch                      " Highlight matches.
+
+set wrap                          " Turn on line wrapping.
+set scrolloff=3                   " Show 3 lines of context around the cursor.
+
+set title                         " Set the terminal's title
+
+set visualbell                    " No beeping.
+
+set nobackup                      " Don't make a backup before overwriting a file.
+set nowritebackup                 " And again.
+set directory=$HOME/.vim/tmp//,.  " Keep swap files in one location
+
+set tabstop=2                    " Global tab width.
+set shiftwidth=2                 " And again, related.
+set expandtab                    " Use spaces instead of tabs
+
+set autoindent
+
+set laststatus=2                  " Show the status line all the time
+
+set exrc                          " enable per-directory .vimrc files
+set secure                        " disable unsafe commands in local .vimrc files
+
+set foldmethod=syntax             " fold chuncks of code according to doc
+
+" Useful status information at bottom of screen
+set statusline=[%n]\ %<%.99f\ %h%w%m%r%y\ %{exists('*CapsLockStatusline')?CapsLockStatusline():''}%=%-16(\ %l,%c-%v\ %)%P
+
+" let vim download dictionary files when needed
+let g:spellfile_URL = 'http://ftp.vim.org/vim/runtime/spell'
+
+" map :W to :w
+command! W :w
+
+set winwidth=85
+
+" Always show tab bar
+set showtabline=2
+" show whitespace
+set list listchars=tab:\ \ ,trail:·"
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" ARROW KEYS ARE UNACCEPTABLE
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+noremap <Left> <Nop>
+noremap <Right> <Nop>
+noremap <Up> <Nop>
+noremap <Down> <Nop>
+
+" Or use vividchalk
+" colorscheme vividchalk 
+" colorscheme macvim
+" set background=light
+" :set background=dark
+" :color grb256
+
+let mapleader = ","             " Use , as leader
+
+" Tab mappings.
+noremap <leader>tt :tabnew<cr>
+noremap <leader>te :tabedit
+noremap <leader>tc :tabclose<cr>
+noremap <leader>to :tabonly<cr>
+noremap <leader>tn :tabnext<cr>
+noremap <leader>tp :tabprevious<cr>
+noremap <leader>tf :tabfirst<cr>
+noremap <leader>tl :tablast<cr>
+noremap <leader>tm :tabmove
+noremap <f7> :tabprevious<cr>
+noremap <f8> :tabnext<cr>
+
+nnoremap <Left> :bprevious<CR>
+nnoremap <Right> :bnext<CR>
+
+nnoremap <cr> :nohlsearch<cr>
+
+" reindent whole file and leave cursor at the beggining of the current line
+nnoremap <leader>i gg=G``^
+
+" remapping unimpaired.vim exchange commands to new shortcuts
+nnoremap <C-k> [e
+nnoremap <C-j> ]e
+
+vnoremap <C-k> [egv
+vnoremap <C-j> ]egv
+
+" Map <c-p> to to º in insert mode
+inoremap º <c-p>
+
+" Jamis Buck's file opening plugin
+" map <Leader>t :FuzzyFinderTextMate<Enter>
+" nmap <C-S-T> <Leader>t
+
+noremap <leader>ev :vs $MYVIMRC<cr>
+noremap <leader>ss :vs ~/.vim/bundle/vim-snippets/snippets/<cr>
+noremap <leader>p :split project_notes.txt<cr>
+
+" map space to iterate buffer windows
+nnoremap <space> <c-w>w
+
+augroup vimrc_acmd
+  autocmd!
+  " Source the vimrc file after saving it
+  autocmd bufwritepost .vimrc source $MYVIMRC
+  " Jump to last cursor position unless it's invalid or in an event handler
+  autocmd BufReadPost *
+        \ if line("'\"") > 0 && line("'\"") <= line("$") |
+        \   exe "normal g`\"" |
+        \ endif
+augroup END
+
+
+" Automatic fold settings for specific files. Uncomment to use.
+" autocmd FileType ruby setlocal foldmethod=syntax
+" autocmd FileType css  setlocal foldmethod=indent shiftwidth=2 tabstop=2
+
+augroup ruby_acmd
+  autocmd!
+  autocmd FileType ruby map <leader>r <Esc>:w<CR>:!clear<CR>:!ruby %<CR>
+augroup END
+
+augroup md_acmd
+  autocmd!
+  " associate md extesion to markdown instead of modula2"
+  autocmd BufRead,BufNewFile *.md set filetype=markdown
+augroup END
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" MULTIPURPOSE TAB KEY
+" Indent if we're at the beginning of a line. Else, do completion.
+" (from https://github.com/garybernhardt/dotfiles/blob/master/.vimrc)
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" function! InsertTabWrapper()
+"     let col = col('.') - 1
+"     if !col || getline('.')[col - 1] !~ '\k'
+"         return "\<tab>"
+"       else
+"         return "\<c-p>"
+"     endif
+" endfunction
+" inoremap <tab> <c-r>=InsertTabWrapper()<cr>
+" inoremap <s-tab> <c-n>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" RENAME CURRENT FILE 
+" (from https://github.com/garybernhardt/dotfiles/blob/master/.vimrc)
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+function! RenameFile()
+  let old_name = expand('%')
+  let new_name = input('New file name: ', expand('%'), 'file')
+  if new_name != '' && new_name != old_name
+    exec ':saveas ' . new_name
+    exec ':silent !rm ' . old_name
+    redraw!
+  endif
+endfunction
+noremap <leader>n :call RenameFile()<cr>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" RUNNING TESTS
+" (from https://github.com/garybernhardt/dotfiles/blob/master/.vimrc)
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+noremap <leader>t :call RunTestFile()<cr>
+noremap <leader>T :call RunNearestTest()<cr>
+noremap <leader>a :call RunTests('')<cr>
+noremap <leader>c :w\|:!script/features<cr>
+noremap <leader>w :w\|:!script/features --profile wip<cr>
+
+function! RunTestFile(...)
+  if a:0
+    let command_suffix = a:1
+  else
+    let command_suffix = ""
+  endif
+
+  " Run the tests for the previously-marked file.
+  let in_test_file = match(expand("%"), '\(_test.rb\|.feature\|_spec.rb\)$') != -1
+  if in_test_file
+    call SetTestFile()
+  elseif !exists("t:grb_test_file")
+    return
+  end
+  call RunTests(t:grb_test_file . command_suffix)
+endfunction
+
+function! RunNearestTest()
+  let spec_line_number = line('.')
+  call RunTestFile(":" . spec_line_number . " -b")
+endfunction
+
+function! SetTestFile()
+  " Set the spec file that tests will be run for.
+  let t:grb_test_file=@%
+endfunction
+
+function! RunTests(filename)
+  " Write the file and run tests for the given filename
+  :w
+  :silent !clear
+  if match(a:filename, '_test.rb$') != -1
+    exec ":!ruby -Itest " . a:filename . " -v"
+  elseif match(a:filename, '\.feature$') != -1
+    exec ":!script/features " . a:filename
+  else
+    if filereadable("script/test")
+      exec ":!script/test " . a:filename
+    elseif filereadable("Gemfile")
+      exec ":!bundle exec rspec --color " . a:filename
+    else
+      exec ":!rspec --color " . a:filename
+    end
+  end
+endfunction
+
+
+" Show syntax highlighting groups for word under cursor
+nnoremap <leader>h :call <SID>SynStack()<CR>
+function! <SID>SynStack()
+  if !exists("*synstack")
+    return
+  endif
+  echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+endfunc
+
+" Leader shortcuts for Rails commands
+" https://github.com/ryanb/dotfiles/blob/master/vimrc
+
+noremap <Leader>m :Rmodel 
+noremap <Leader>c :Rcontroller 
+noremap <Leader>v :Rview 
+noremap <Leader>u :Runittest 
+noremap <Leader>f :Rfunctionaltest 
+noremap <Leader>rm :RTmodel 
+noremap <Leader>rc :RTcontroller 
+noremap <Leader>rv :RTview 
+noremap <Leader>ru :RTunittest 
+noremap <Leader>rf :RTfunctionaltest 
+noremap <Leader>sm :RSmodel 
+noremap <Leader>sc :RScontroller 
+noremap <Leader>sv :RSview 
+noremap <Leader>su :RSunittest 
+noremap <Leader>sf :RSfunctionaltest 
+
+noremap <leader>3 <c-\>s
