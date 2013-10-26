@@ -1,5 +1,5 @@
-bundle/**
-~bundle/vundle
+.vim/bundle/**
+~.vim/bundle/vundle
 .cups/
 .CFUserTextEncoding
 .DS_Store
