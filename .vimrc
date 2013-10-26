@@ -8,6 +8,7 @@ call vundle#rc()
 Bundle 'gmarik/vundle'
 
 Bundle 'kien/ctrlp.vim'
+Bundle 'tpope/vim-fugitive'
 " original repos on github
 " Bundle 'tpope/vim-fugitive'
 " vim-scripts repos
