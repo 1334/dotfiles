@@ -1,5 +1,6 @@
 .vim/bundle/**
 ~.vim/bundle/vundle
+.cache
 .cups/
 .CFUserTextEncoding
 .DS_Store
