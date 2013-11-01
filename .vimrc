@@ -78,8 +78,6 @@ set laststatus=2                  " Show the status line all the time
 set exrc                          " enable per-directory .vimrc files
 set secure                        " disable unsafe commands in local .vimrc files
 
-set foldmethod=syntax             " fold chuncks of code according to doc
-
 " Useful status information at bottom of screen
 set statusline=[%n]\ %<%.99f\ %h%w%m%r%y\ %{exists('*CapsLockStatusline')?CapsLockStatusline():''}%=%-16(\ %l,%c-%v\ %)%P
 
