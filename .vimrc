@@ -255,14 +255,14 @@ function! RunTests(filename)
   if match(a:filename, '_test.rb$') != -1
     exec ":!ruby -Itest " . a:filename . " -v"
   elseif match(a:filename, '\.feature$') != -1
-    exec ":!script/features " . a:filename
+    exec ":!bin/cucumber " . a:filename
   else
     if filereadable("script/test")
       exec ":!script/test " . a:filename
     elseif filereadable("Gemfile")
-      exec ":!bundle exec rspec --color " . a:filename
+      exec ":!bin/rspec --color " . a:filename
     else
-      exec ":!rspec --color " . a:filename
+      exec ":!bin/rspec --color " . a:filename
     end
   end
 endfunction
