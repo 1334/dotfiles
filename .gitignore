@@ -11,6 +11,7 @@
 .DS_Store
 .FileSync
 .gem
+.ssh/
 .subversion
 .Trash
 .viminfo
