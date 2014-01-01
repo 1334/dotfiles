@@ -153,6 +153,9 @@ noremap <leader>p :split project_notes.txt<cr>
 " map space to iterate buffer windows
 nnoremap <space> <c-w>w
 
+" associate capistrano files with ruby syntax
+au BufRead,BufNewFile *.cap setfiletype ruby
+
 augroup vimrc_acmd
   autocmd!
   " Source the vimrc file after saving it
