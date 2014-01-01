@@ -3,6 +3,7 @@
 .account
 .apdisk
 .bash_history
+.berkshelf
 .cache
 .cups/
 .CFUserTextEncoding
@@ -10,10 +11,17 @@
 .dropbox
 .DS_Store
 .FileSync
+.fontconfig
 .gem
+.hgignore_global
+.pow
+.pry_history
+.rnd
+.sqlite_history
 .ssh/
 .subversion
 .Trash
+.vagrant.d
 .viminfo
 Adlm
 Applications
@@ -29,3 +37,4 @@ Music
 Pictures
 Public
 Sites
+tmp
