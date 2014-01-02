@@ -304,3 +304,5 @@ noremap <Leader>su :RSunittest
 noremap <Leader>sf :RSfunctionaltest
 
 noremap <leader>3 <c-\>s
+
+noremap <Leader>b :NERDTreeToggle<cr>
