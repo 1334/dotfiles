@@ -1,6 +1,7 @@
 .vim/bundle/**
 ~.vim/bundle/vundle
 .account
+.adobe
 .apdisk
 .bash_history
 .berkshelf
@@ -13,7 +14,9 @@
 .FileSync
 .fontconfig
 .gem
+.heroku
 .hgignore_global
+.netrc
 .pow
 .pry_history
 .rnd
