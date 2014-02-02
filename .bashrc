@@ -8,4 +8,4 @@ export RBENV_ROOT=/usr/local/var/rbenv
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 
 # custom PATH
-export PATH="bin:/usr/local/bin:~/bin:$PATH"
+export PATH="bin:/usr/local/bin:~/bin:/usr/local/heroku/bin:$PATH"
