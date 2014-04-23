@@ -107,7 +107,7 @@ noremap <Up> <Nop>
 noremap <Down> <Nop>
 
 " Or use vividchalk
-" colorscheme vividchalk 
+" colorscheme vividchalk
 " colorscheme macvim
 " set background=light
 " :set background=dark
@@ -164,22 +164,18 @@ augroup vimrc_acmd
   autocmd!
   " Source the vimrc file after saving it
   autocmd bufwritepost .vimrc source $MYVIMRC
+  " Strip trailing whitespace
+  autocmd BufWritePre * :%s/\s\+$//e
   " Jump to last cursor position unless it's invalid or in an event handler
   autocmd BufReadPost *
         \ if line("'\"") > 0 && line("'\"") <= line("$") |
         \   exe "normal g`\"" |
-        \ endif
+         \ endif
 augroup END
 
-
-" Automatic fold settings for specific files. Uncomment to use.
-" autocmd FileType ruby setlocal foldmethod=syntax
-" autocmd FileType css  setlocal foldmethod=indent shiftwidth=2 tabstop=2
-
-augroup ruby_acmd
-  autocmd!
-  autocmd FileType ruby map <leader>r <Esc>:w<CR>:!clear<CR>:!ruby %<CR>
-augroup END
+:" Automatic fold settings for specific files. Uncomment to use.
+:" autocmd FileType ruby setlocal foldmethod=syntax
+:" autocmd FileType css  setlocal foldmethod=indent shiftwidth=2 tabstop=2
 
 augroup md_acmd
   autocmd!
@@ -187,6 +183,11 @@ augroup md_acmd
   autocmd BufRead,BufNewFile *.md set filetype=markdown
 augroup END
 
+augroup pl_acmd
+  autocmd!
+  " associate pl extesion to prolog instead of perl
+  autocmd BufRead,BufNewFile *.pl set filetype=prolog
+augroup END
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " MULTIPURPOSE TAB KEY
 " Indent if we're at the beginning of a line. Else, do completion.
@@ -204,7 +205,7 @@ augroup END
 " inoremap <s-tab> <c-n>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" RENAME CURRENT FILE 
+" RENAME CURRENT FILE
 " (from https://github.com/garybernhardt/dotfiles/blob/master/.vimrc)
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 function! RenameFile()
@@ -222,11 +223,15 @@ noremap <leader>n :call RenameFile()<cr>
 " RUNNING TESTS
 " (from https://github.com/garybernhardt/dotfiles/blob/master/.vimrc)
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-noremap <leader>t :call RunTestFile()<cr>
-noremap <leader>T :call RunNearestTest()<cr>
-noremap <leader>a :call RunTests('')<cr>
-noremap <leader>c :w\|:!script/features<cr>
-noremap <leader>w :w\|:!script/features --profile wip<cr>
+
+augroup ruby_test
+  autocmd!
+  autocmd FileType ruby noremap <leader>t :call RunTestFile()<cr>
+  autocmd FileType ruby noremap <leader>T :call RunNearestTest()<cr>
+  autocmd FileType ruby noremap <leader>a :call RunTests('')<cr>
+  autocmd FileType ruby noremap <leader>c :w\|:!script/features<cr>
+  autocmd FileType ruby noremap <leader>w :w\|:!script/features --profile wip<cr>
+augroup END
 
 function! RunTestFile(...)
   if a:0
@@ -306,3 +311,26 @@ noremap <Leader>sf :RSfunctionaltest
 noremap <leader>3 <c-\>s
 
 noremap <Leader>b :NERDTreeToggle<cr>
+
+let run_commands = {
+      \'applescript': 'osascript',
+      \'bash': 'bash',
+      \'javascript': 'node',
+      \'nodejs': 'node',
+      \'perl': 'perl',
+      \'php': 'php',
+      \'prolog': 'swipl',
+      \'python': 'python',
+      \'ruby': 'ruby',
+      \'sh': 'sh',
+      \'r': 'Rscript',
+      \}
+
+augroup run_commands
+  autocmd!
+  for ft_name in keys(run_commands)
+    execute 'autocmd Filetype ' . ft_name . ' nnoremap <buffer> <leader>r '
+          \.'<Esc>:w<CR>:!clear<CR>:!' . run_commands[ft_name]
+          \.' %<CR>'
+  endfor
+augroup END
