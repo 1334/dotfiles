@@ -22,6 +22,7 @@ Plugin 'tomtom/tlib_vim'
 Plugin 'garbas/vim-snipmate'
 Plugin 'honza/vim-snippets'
 Plugin 'scrooloose/nerdtree'
+Plugin 'thoughtbot/vim-rspec'
 
 " original repos on github
 " Bundle 'tpope/vim-fugitive'
@@ -221,67 +222,6 @@ function! RenameFile()
 endfunction
 noremap <leader>n :call RenameFile()<cr>
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" RUNNING TESTS
-" (from https://github.com/garybernhardt/dotfiles/blob/master/.vimrc)
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-augroup ruby_test
-  autocmd!
-  autocmd FileType ruby noremap <leader>t :call RunTestFile()<cr>
-  autocmd FileType ruby noremap <leader>T :call RunNearestTest()<cr>
-  autocmd FileType ruby noremap <leader>a :call RunTests('')<cr>
-  autocmd FileType ruby noremap <leader>c :w\|:!script/features<cr>
-  autocmd FileType ruby noremap <leader>w :w\|:!script/features --profile wip<cr>
-augroup END
-
-function! RunTestFile(...)
-  if a:0
-    let command_suffix = a:1
-  else
-    let command_suffix = ""
-  endif
-
-  " Run the tests for the previously-marked file.
-  let in_test_file = match(expand("%"), '\(_test.rb\|.feature\|_spec.rb\)$') != -1
-  if in_test_file
-    call SetTestFile()
-  elseif !exists("t:grb_test_file")
-    return
-  end
-  call RunTests(t:grb_test_file . command_suffix)
-endfunction
-
-function! RunNearestTest()
-  let spec_line_number = line('.')
-  call RunTestFile(":" . spec_line_number . " -b")
-endfunction
-
-function! SetTestFile()
-  " Set the spec file that tests will be run for.
-  let t:grb_test_file=@%
-endfunction
-
-function! RunTests(filename)
-  " Write the file and run tests for the given filename
-  :w
-  :silent !clear
-  if match(a:filename, '_test.rb$') != -1
-    exec ":!ruby -Itest " . a:filename . " -v"
-  elseif match(a:filename, '\.feature$') != -1
-    exec ":!bin/cucumber " . a:filename
-  else
-    if filereadable("script/test")
-      exec ":!script/test " . a:filename
-    elseif filereadable("Gemfile")
-      exec ":!bin/rspec --color " . a:filename
-    else
-      exec ":!bin/rspec --color " . a:filename
-    end
-  end
-endfunction
-
-
 " Show syntax highlighting groups for word under cursor
 nnoremap <leader>h :call <SID>SynStack()<CR>
 function! <SID>SynStack()
@@ -336,3 +276,9 @@ augroup run_commands
           \.' %<CR>'
   endfor
 augroup END
+
+" vim-rspec mappings
+map <Leader>t :call RunCurrentSpecFile()<CR>
+map <Leader>s :call RunNearestSpec()<CR>
+map <Leader>l :call RunLastSpec()<CR>
+map <Leader>a :call RunAllSpecs()<CR>
