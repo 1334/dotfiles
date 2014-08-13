@@ -172,7 +172,7 @@ augroup vimrc_acmd
   autocmd BufReadPost *
         \ if line("'\"") > 0 && line("'\"") <= line("$") |
         \   exe "normal g`\"" |
-         \ endif
+        \ endif
 augroup END
 
 :" Automatic fold settings for specific files. Uncomment to use.
