@@ -135,8 +135,8 @@ nnoremap <Right> :bnext<CR>
 
 nnoremap <cr> :nohlsearch<cr>
 
-" reindent whole file and leave cursor at the beggining of the current line
-nnoremap <leader>i gg=G``^
+" reindent whole file and leave cursor where it was
+nnoremap <leader>i mmgg=G`m
 
 " remapping unimpaired.vim exchange commands to new shortcuts
 nnoremap <C-k> [e
