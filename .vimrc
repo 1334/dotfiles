@@ -271,13 +271,7 @@ function! RunTests(filename)
   elseif match(a:filename, '\.feature$') != -1
     exec ":!bin/cucumber " . a:filename
   else
-    if filereadable("script/test")
-      exec ":!script/test " . a:filename
-    elseif filereadable("Gemfile")
-      exec ":!bin/rspec --color " . a:filename
-    else
-      exec ":!bin/rspec --color " . a:filename
-    end
+    exec ":!bin/rspec " . a:filename
   end
 endfunction
 
