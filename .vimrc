@@ -22,6 +22,7 @@ Plugin 'tomtom/tlib_vim'
 Plugin 'garbas/vim-snipmate'
 Plugin 'honza/vim-snippets'
 Plugin 'scrooloose/nerdtree'
+Plugin 'thoughtbot/vim-rspec'
 
 " original repos on github
 " Bundle 'tpope/vim-fugitive'
@@ -275,7 +276,6 @@ function! RunTests(filename)
   end
 endfunction
 
-
 " Show syntax highlighting groups for word under cursor
 nnoremap <leader>h :call <SID>SynStack()<CR>
 function! <SID>SynStack()
@@ -330,3 +330,9 @@ augroup run_commands
           \.' %<CR>'
   endfor
 augroup END
+
+" vim-rspec mappings
+map <Leader>t :call RunCurrentSpecFile()<CR>
+map <Leader>s :call RunNearestSpec()<CR>
+map <Leader>l :call RunLastSpec()<CR>
+map <Leader>a :call RunAllSpecs()<CR>
