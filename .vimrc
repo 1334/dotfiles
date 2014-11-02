@@ -159,6 +159,12 @@ noremap <leader>p :split project_notes.txt<cr>
 " map space to iterate buffer windows
 nnoremap <space> <c-w>w
 
+" spelling maps
+nnoremap <F5> :setlocal nospell<cr>
+nnoremap <F6> :setlocal spell spelllang=
+nnoremap <F7> ]s
+nnoremap <F8> z=
+
 " associate capistrano files with ruby syntax
 au BufRead,BufNewFile *.cap setfiletype ruby
 
