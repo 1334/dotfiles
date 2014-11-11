@@ -22,6 +22,7 @@ Plugin 'tomtom/tlib_vim'
 Plugin 'garbas/vim-snipmate'
 Plugin 'honza/vim-snippets'
 Plugin 'scrooloose/nerdtree'
+Plugin 'godlygeek/tabular'
 
 " original repos on github
 " Bundle 'tpope/vim-fugitive'
