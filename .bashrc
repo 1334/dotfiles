@@ -12,6 +12,8 @@ export PATH="bin:/usr/local/bin:~/bin:/usr/local/heroku/bin:$PATH"
 
 export EDITOR=vim
 
-if [ -f $(brew --prefix)/etc/bash_completion  ]; then
-  . $(brew --prefix)/etc/bash_completion
+if command -v brew 2>/dev/null; then
+  if [ -f $(brew --prefix)/etc/bash_completion  ]; then
+    . $(brew --prefix)/etc/bash_completion
+  fi
 fi
