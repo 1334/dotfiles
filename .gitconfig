@@ -9,7 +9,13 @@
   default = simple
 
 [alias]
-  co = checkout
+  st = status
+  c  = commit
+  b  = branch
+  p  = pull
+  pu = push
+  ch = checkout
+  d  = diff
   cleanup = !git remote prune origin && git gc && git clean -df && git stash clear
   lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%C(bold blue)<%an>%Creset' --abbrev-commit
 
@@ -24,7 +30,7 @@
   helper = osxkeychain
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path = 
+	path =
 [mergetool "sourcetree"]
 	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true
