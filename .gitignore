@@ -9,6 +9,7 @@
 .cache
 .cups/
 .CFUserTextEncoding
+.CloudStation
 .dat020e.052
 .dropbox
 .dropbox-master
@@ -43,6 +44,7 @@
 Adlm
 Applications
 code
+CloudStation
 Desktop
 Documents
 Downloads
