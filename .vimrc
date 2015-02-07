@@ -206,11 +206,11 @@ augroup END
 "     let col = col('.') - 1
 "     if !col || getline('.')[col - 1] !~ '\k'
 "         return "\<tab>"
-"       else
+"     else
 "         return "\<c-p>"
 "     endif
 " endfunction
-" inoremap <tab> <c-r>=InsertTabWrapper()<cr>
+" inoremap <expr> <tab> InsertTabWrapper()
 " inoremap <s-tab> <c-n>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
