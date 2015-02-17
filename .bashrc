@@ -1,3 +1,4 @@
+set -o vi
 # custom prompt
 export PS1='[\u@\h \W$(vcprompt -f " (%b%m)" -M "*")]$ '
 
