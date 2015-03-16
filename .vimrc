@@ -23,6 +23,7 @@ Plugin 'garbas/vim-snipmate'
 Plugin 'honza/vim-snippets'
 Plugin 'scrooloose/nerdtree'
 Plugin 'godlygeek/tabular'
+Plugin 'ervandew/supertab'
 
 " original repos on github
 " Bundle 'tpope/vim-fugitive'
