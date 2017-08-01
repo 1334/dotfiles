@@ -12,10 +12,11 @@ if hash brew 2>/dev/null; then
   fi
 fi
 
-eval "$(rbenv init -)"
 
 # custom PATH
 export PATH="bin:$HOME/.rbenv/bin:$HOME/bin:/usr/local/bin:$PATH"
+
+eval "$(rbenv init -)"
 
 #OSX exclusive
 if hash osascript 2>/dev/null;then
