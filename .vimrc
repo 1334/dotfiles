@@ -24,6 +24,7 @@ Plugin 'honza/vim-snippets'
 Plugin 'scrooloose/nerdtree'
 Plugin 'godlygeek/tabular'
 Plugin 'ervandew/supertab'
+Plugin 'thoughtbot/vim-rspec'
 
 " original repos on github
 " Bundle 'tpope/vim-fugitive'
@@ -156,7 +157,7 @@ inoremap º <c-p>
 
 noremap <leader>ev :vs $MYVIMRC<cr>
 noremap <leader>ss :vs ~/.vim/bundle/vim-snippets/snippets/<cr>
-noremap <leader>p :split project_notes.txt<cr>
+noremap <leader>pn :split project_notes.txt<cr>
 
 " map space to iterate buffer windows
 nnoremap <space> <c-w>w
@@ -235,54 +236,12 @@ noremap <leader>n :call RenameFile()<cr>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 augroup ruby_test
-  autocmd!
-  autocmd FileType ruby noremap <leader>t :call RunTestFile()<cr>
-  autocmd FileType cucumber noremap <leader>t :call RunTestFile()<cr>
-  autocmd FileType ruby noremap <leader>T :call RunNearestTest()<cr>
-  autocmd FileType ruby noremap <leader>a :call RunTests('')<cr>
-  autocmd FileType ruby noremap <leader>c :w\|:!clear && bin/cucumber<cr>
-  autocmd FileType ruby noremap <leader>w :w\|:!clear && bin/cucumber --profile wip<cr>
+  " RSpec.vim mappings
+  map <Leader>t :call RunCurrentSpecFile()<CR>
+  map <Leader>s :call RunNearestSpec()<CR>
+  map <Leader>l :call RunLastSpec()<CR>
+  map <Leader>a :call RunAllSpecs()<CR>
 augroup END
-
-function! RunTestFile(...)
-  if a:0
-    let command_suffix = a:1
-  else
-    let command_suffix = ""
-  endif
-
-  " Run the tests for the previously-marked file.
-  let in_test_file = match(expand("%"), '\(_test.rb\|.feature\|_spec.rb\)$') != -1
-  if in_test_file
-    call SetTestFile()
-  elseif !exists("t:actual_test_file")
-    return
-  end
-  call RunTests(t:actual_test_file . command_suffix)
-endfunction
-
-function! RunNearestTest()
-  let spec_line_number = line('.')
-  call RunTestFile(":" . spec_line_number . " -b")
-endfunction
-
-function! SetTestFile()
-  " Set the spec file that tests will be run for.
-  let t:actual_test_file=@%
-endfunction
-
-function! RunTests(filename)
-  " Write the file and run tests for the given filename
-  :w
-  :silent !clear
-  if match(a:filename, '_test.rb$') != -1
-    exec ":!ruby -Itest " . a:filename . " -v"
-  elseif match(a:filename, '\.feature$') != -1
-    exec ":!bin/cucumber " . a:filename
-  else
-    exec ":!bin/rspec " . a:filename
-  end
-endfunction
 
 " Show syntax highlighting groups for word under cursor
 nnoremap <leader>h :call <SID>SynStack()<CR>
@@ -314,7 +273,8 @@ endfunc
 
 noremap <leader>3 <c-\>s
 
-noremap <Leader>b :NERDTreeToggle<cr>
+noremap <leader>b :NERDTreeToggle<cr>
+noremap <leader>p :CtrlP<cr>
 
 let run_commands = {
       \'applescript': 'osascript',
