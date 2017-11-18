@@ -3,7 +3,7 @@
   email = 1334@shadowproject.net
 
 [core]
-  excludesfile = ~/.gitignore_global
+	excludesfile = /Users/isp/.gitignore_global
 
 [push]
   default = simple
@@ -30,7 +30,7 @@
   helper = osxkeychain
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path =
+	path = 
 [mergetool "sourcetree"]
-	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true
