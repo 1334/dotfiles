@@ -252,27 +252,6 @@ function! <SID>SynStack()
   echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
 endfunc
 
-" Leader shortcuts for Rails commands
-" https://github.com/ryanb/dotfiles/blob/master/vimrc
-
-" noremap <Leader>m :Rmodel
-" noremap <Leader>c :Rcontroller
-" noremap <Leader>v :Rview
-" noremap <Leader>u :Runittest
-" noremap <Leader>f :Rfunctionaltest
-" noremap <Leader>rm :RTmodel
-" noremap <Leader>rc :RTcontroller
-" noremap <Leader>rv :RTview
-" noremap <Leader>ru :RTunittest
-" noremap <Leader>rf :RTfunctionaltest
-" noremap <Leader>sm :RSmodel
-" noremap <Leader>sc :RScontroller
-" noremap <Leader>sv :RSview
-" noremap <Leader>su :RSunittest
-" noremap <Leader>sf :RSfunctionaltest
-
-noremap <leader>3 <c-\>s
-
 noremap <leader>b :NERDTreeToggle<cr>
 noremap <leader>p :CtrlP<cr>
 
