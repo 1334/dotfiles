@@ -1,9 +1,10 @@
 .vim/bundle/**
-~.vim/bundle/vundle
+.vim/bundle/vundle
 .account
 .adobe
 .apdisk
 .atom/
+.bash_logout
 .bash_history
 .bash_sessions
 .berkshelf
@@ -34,8 +35,10 @@ lesshst
 .pry_history
 .qucs
 .oracle_jre_usage
+.profile
 .puma-dev
 .Rapp.history
+.rbenv
 .RData
 .Rhistory
 .rnd
@@ -44,6 +47,7 @@ lesshst
 .sqlite_history
 .ssh/
 .subversion
+.sudo_as_admin_successful
 .swipl-dir-history/
 .Trash
 .uuid
