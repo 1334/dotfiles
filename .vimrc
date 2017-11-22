@@ -25,6 +25,7 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'godlygeek/tabular'
 Plugin 'ervandew/supertab'
 Plugin 'thoughtbot/vim-rspec'
+Plugin 'elixir-editors/vim-elixir'
 
 " original repos on github
 " Bundle 'tpope/vim-fugitive'
