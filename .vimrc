@@ -236,7 +236,7 @@ noremap <leader>n :call RenameFile()<cr>
 " (from https://github.com/garybernhardt/dotfiles/blob/master/.vimrc)
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-augroup ruby_test
+augroup by_test
   " RSpec.vim mappings
   map <Leader>t :call RunCurrentSpecFile()<CR>
   map <Leader>s :call RunNearestSpec()<CR>
@@ -260,6 +260,7 @@ let run_commands = {
       \'applescript': 'osascript',
       \'bash': 'bash',
       \'javascript': 'node',
+      \'elixir': 'elixir',
       \'nodejs': 'node',
       \'perl': 'perl',
       \'php': 'php',
@@ -277,4 +278,9 @@ augroup run_commands
           \.'<Esc>:w<CR>:!clear<CR>:!' . run_commands[ft_name]
           \.' %<CR>'
   endfor
+augroup END
+
+augroup elixir_commands
+  autocmd!
+  autocmd FileType elixir nnoremap <leader>x <ESC>:w<CR>:!clear<CR>:!iex -S mix<CR>
 augroup END

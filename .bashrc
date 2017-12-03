@@ -14,10 +14,14 @@ fi
 
 # custom PATH
 export PATH="$HOME/.rbenv/bin:$HOME/bin:/usr/local/bin:$PATH"
+
 # init rbenv
 eval "$(rbenv init -)"
 
 export PATH="./bin:$PATH"
+
+# enable iex shell history
+export ERL_AFLAGS="-kernel shell_history enabled"
 
 #OSX exclusive
 if hash osascript 2>/dev/null;then
