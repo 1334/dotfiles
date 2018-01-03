@@ -23,9 +23,11 @@
 .fontconfig
 .gem
 .heroku
+.hex/
 .hgignore_global
 lesshst
 .local
+.mix/
 .NERDTreeBookmarks
 .netrc
 .node_repl_history
@@ -45,6 +47,7 @@ lesshst
 .Rprofile
 .rstudio-desktop/
 .sqlite_history
+.SoulseekQt/
 .ssh/
 .subversion
 .sudo_as_admin_successful
@@ -63,12 +66,14 @@ Desktop
 Documents
 Downloads
 Dropbox
+FontBase
 exercism
 isus
 learning
 Library
 Movies
 Music
+OmniPresence
 Pictures
 Public
 Sites
