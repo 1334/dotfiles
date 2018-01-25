@@ -236,12 +236,13 @@ noremap <leader>n :call RenameFile()<cr>
 " (from https://github.com/garybernhardt/dotfiles/blob/master/.vimrc)
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-augroup by_test
-  " RSpec.vim mappings
+augroup ruby_test
+  " Ruby testing mappings
   map <Leader>t :call RunCurrentSpecFile()<CR>
   map <Leader>s :call RunNearestSpec()<CR>
   map <Leader>l :call RunLastSpec()<CR>
   map <Leader>a :call RunAllSpecs()<CR>
+  map <Leader>c :!cucumber %<CR>
 augroup END
 
 " Show syntax highlighting groups for word under cursor
