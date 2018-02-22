@@ -4,6 +4,7 @@
 .adobe
 .apdisk
 .atom/
+.babel*
 .bash_logout
 .bash_history
 .bash_sessions
@@ -27,10 +28,11 @@
 .hgignore_global
 lesshst
 .local
+.lldb
 .mix/
 .NERDTreeBookmarks
 .netrc
-.node_repl_history
+.node*
 .npm
 .psql_history
 .pow
@@ -51,12 +53,15 @@ lesshst
 .ssh/
 .subversion
 .sudo_as_admin_successful
+.SynologyDrive
 .swipl-dir-history/
 .Trash
 .uuid
+.v8*
 .vagrant.d
 .vim
 .viminfo
+.vscode
 .Xauthority
 Adlm
 Applications
@@ -77,5 +82,6 @@ OmniPresence
 Pictures
 Public
 Sites
+SynologyDrive
 tmp
 www
