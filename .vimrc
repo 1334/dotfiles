@@ -7,33 +7,34 @@ call vundle#begin()
 " let Vundle manage Vundle
 Plugin 'VundleVim/Vundle.vim'
 
-Plugin 'jiangmiao/auto-pairs'
+" Utility
+Plugin 'scrooloose/nerdtree'
 Plugin 'kien/ctrlp.vim'
-Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-commentary'
-Plugin 'vim-ruby/vim-ruby'
-Plugin 'tpope/vim-rails'
-Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-bundler'
-Plugin 'tpope/vim-rake'
 " required by vim-snipmate
 Plugin 'MarcWeber/vim-addon-mw-utils'
 Plugin 'tomtom/tlib_vim'
 Plugin 'garbas/vim-snipmate'
 Plugin 'honza/vim-snippets'
-Plugin 'scrooloose/nerdtree'
+
+" Generic Programming
+Plugin 'jiangmiao/auto-pairs'
+Plugin 'tpope/vim-commentary'
+Plugin 'tpope/vim-surround'
 Plugin 'godlygeek/tabular'
 Plugin 'ervandew/supertab'
-Plugin 'thoughtbot/vim-rspec'
-Plugin 'elixir-editors/vim-elixir'
 
-" original repos on github
-" Bundle 'tpope/vim-fugitive'
-" vim-scripts repos
-" Bundle 'L9'
-" non github repos
-" Bundle 'git://git.wincent.com/command-t.git'
-" Bundle 'file:///Users/gmarik/path/to/plugin'
+" Git
+Plugin 'tpope/vim-fugitive'
+
+" Elixir
+Plugin 'elixir-editors/vim-elixir'
+Plugin 'slashmili/alchemist.vim'
+
+" Ruby
+Plugin 'vim-ruby/vim-ruby'
+Plugin 'tpope/vim-rails'
+Plugin 'tpope/vim-bundler'
+Plugin 'tpope/vim-rake'
 
 call vundle#end()
 
@@ -56,6 +57,8 @@ set history=10000                 " remember more commands and search history
 
 set wildmenu                      " Enhanced command line completion.
 set wildmode=list:longest         " Complete files like a shell.
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip
+                                  " ignore thhis files/folders by default
 
 set ignorecase                    " Case-insensitive searching.
 set smartcase                     " But case-sensitive if expression contains a capital letter.
@@ -104,20 +107,24 @@ set showtabline=2
 " show whitespace
 set list listchars=tab:\ \ ,trail:·"
 
+" autocomplete commands
+autocmd FileType php setl ofu=phpcomplete#CompletePHP
+autocmd FileType ruby,eruby setl ofu=rubycomplete#Complete
+autocmd FileType html,xhtml setl ofu=htmlcomplete#CompleteTags
+autocmd FileType c setl ofu=ccomplete#CompleteCpp
+autocmd FileType css setl ofu=csscomplete#CompleteCSS
+autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
+autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
+autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " ARROW KEYS ARE UNACCEPTABLE
+" use them to resize windows
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-noremap <Left> <Nop>
-noremap <Right> <Nop>
-noremap <Up> <Nop>
-noremap <Down> <Nop>
-
-" Or use vividchalk
-" colorscheme vividchalk
-" colorscheme macvim
-" set background=light
-" :set background=dark
-" :color grb256
+nnoremap <Left>  :vertical resize -2<CR>
+nnoremap <Right> :vertical resize +2<CR>
+nnoremap <Up>    :resize -2<CR>
+nnoremap <Down>  :resize +2<CR>
 
 let mapleader = ","             " Use , as leader
 
@@ -134,8 +141,8 @@ noremap <leader>tm :tabmove
 noremap <f7> :tabprevious<cr>
 noremap <f8> :tabnext<cr>
 
-nnoremap <Left> :bprevious<CR>
-nnoremap <Right> :bnext<CR>
+nnoremap <S-Left> :bprevious<CR>
+nnoremap <S-Right> :bnext<CR>
 
 nnoremap <cr> :nohlsearch<cr>
 
@@ -152,10 +159,7 @@ vnoremap <C-j> ]egv
 " Map <c-p> to to º in insert mode
 inoremap º <c-p>
 
-" Jamis Buck's file opening plugin
-" map <Leader>t :FuzzyFinderTextMate<Enter>
-" nmap <C-S-T> <Leader>t
-
+" shortcuts for oppening special files
 noremap <leader>ev :vs $MYVIMRC<cr>
 noremap <leader>ss :vs ~/.vim/bundle/vim-snippets/snippets/<cr>
 noremap <leader>pn :split project_notes.txt<cr>
@@ -168,9 +172,6 @@ nnoremap <F5> :setlocal nospell<cr>
 nnoremap <F6> :setlocal spell spelllang=
 nnoremap <F7> ]s
 nnoremap <F8> z=
-
-" associate capistrano files with ruby syntax
-au BufRead,BufNewFile *.cap setfiletype ruby
 
 augroup vimrc_acmd
   autocmd!
@@ -185,10 +186,6 @@ augroup vimrc_acmd
         \ endif
 augroup END
 
-:" Automatic fold settings for specific files. Uncomment to use.
-:" autocmd FileType ruby setlocal foldmethod=syntax
-:" autocmd FileType css  setlocal foldmethod=indent shiftwidth=2 tabstop=2
-
 augroup md_acmd
   autocmd!
   " associate md extesion to markdown instead of modula2"
@@ -200,6 +197,7 @@ augroup pl_acmd
   " associate pl extesion to prolog instead of perl
   autocmd BufRead,BufNewFile *.pl set filetype=prolog
 augroup END
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " MULTIPURPOSE TAB KEY
 " Indent if we're at the beginning of a line. Else, do completion.
@@ -235,15 +233,57 @@ noremap <leader>n :call RenameFile()<cr>
 " RUNNING TESTS
 " (from https://github.com/garybernhardt/dotfiles/blob/master/.vimrc)
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+nnoremap <leader>t :call RunTestFile()<cr>
+nnoremap <leader>a :call RunTests('')<cr>
 
-augroup ruby_test
-  " Ruby testing mappings
-  map <Leader>t :call RunCurrentSpecFile()<CR>
-  map <Leader>s :call RunNearestSpec()<CR>
-  map <Leader>l :call RunLastSpec()<CR>
-  map <Leader>a :call RunAllSpecs()<CR>
-  map <Leader>c :!cucumber %<CR>
-augroup END
+function! RunTestFile(...)
+    if a:0
+        let command_suffix = a:1
+    else
+        let command_suffix = ""
+    endif
+
+    " Are we in a test file?
+    let in_test_file = match(expand("%"), '\(_spec.rb\|_test.rb\|.feature\|_test.exs\)$') != -1
+
+    " Run the tests for the previously-marked file (or the current file if
+    " it's a test).
+    if in_test_file
+        call SetTestFile(command_suffix)
+    elseif !exists("t:grb_test_file")
+        return
+    end
+    call RunTests(t:grb_test_file)
+endfunction
+
+function! SetTestFile(command_suffix)
+    " Set the spec file that tests will be run for.
+    let t:grb_test_file=@% . a:command_suffix
+endfunction
+
+function! RunTests(filename)
+    " Write the file and run tests for the given filename
+    if expand("%") != ""
+      :w
+    end
+
+    if filereadable("bin/cucumber") && (a:filename =~ '.feature\>' || a:filename =~ '')
+      exec ":!bin/cucumber " . a:filename
+    end
+
+    if filereadable("bin/rspec") && (a:filename =~ '_spec.rb' || a:filename =~ '')
+      exec ":!bin/rspec --color " . a:filename
+    elseif filereadable("Gemfile") && strlen(glob("spec/**/*.rb"))
+      exec ":!bundle exec rspec --color " . a:filename
+    elseif filereadable("Gemfile") && strlen(glob("test/**/*.rb"))
+      exec ":!bin/rails test " . a:filename
+    elseif filereadable("mix.exs") && strlen(glob("test/**/*.exs"))
+      exec ":!mix test " . a:filename
+    end
+endfunction
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 
 " Show syntax highlighting groups for word under cursor
 nnoremap <leader>h :call <SID>SynStack()<CR>
@@ -285,3 +325,4 @@ augroup elixir_commands
   autocmd!
   autocmd FileType elixir nnoremap <leader>x <ESC>:w<CR>:!clear<CR>:!iex -S mix<CR>
 augroup END
+
