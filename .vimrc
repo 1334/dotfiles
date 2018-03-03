@@ -267,11 +267,11 @@ function! RunTests(filename)
       :w
     end
 
-    if filereadable("bin/cucumber") && (a:filename =~ '.feature\>' || a:filename =~ '')
+    if filereadable("bin/cucumber") && a:filename =~ '.feature\>\|'
       exec ":!bin/cucumber " . a:filename
     end
 
-    if filereadable("bin/rspec") && (a:filename =~ '_spec.rb' || a:filename =~ '')
+    if filereadable("bin/rspec") && a:filename =~ '_spec.rb\|'
       exec ":!bin/rspec --color " . a:filename
     elseif filereadable("Gemfile") && strlen(glob("spec/**/*.rb"))
       exec ":!bundle exec rspec --color " . a:filename
