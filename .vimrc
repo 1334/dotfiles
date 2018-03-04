@@ -22,6 +22,7 @@ Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-surround'
 Plugin 'godlygeek/tabular'
 Plugin 'ervandew/supertab'
+Plugin 'craigemery/vim-autotag'
 
 " Git
 Plugin 'tpope/vim-fugitive'
@@ -109,13 +110,15 @@ set list listchars=tab:\ \ ,trail:·"
 
 " autocomplete commands
 autocmd FileType php setl ofu=phpcomplete#CompletePHP
-autocmd FileType ruby,eruby setl ofu=rubycomplete#Complete
 autocmd FileType html,xhtml setl ofu=htmlcomplete#CompleteTags
 autocmd FileType c setl ofu=ccomplete#CompleteCpp
 autocmd FileType css setl ofu=csscomplete#CompleteCSS
 autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
 autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
 autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
+autocmd FileType ruby,eruby setl ofu=rubycomplete#Complete
+
+set completeopt=preview,menuone
 
 " supertab configuration
 let g:SuperTabDefaultCompletionType = "context"
@@ -237,7 +240,7 @@ noremap <leader>n :call RenameFile()<cr>
 " (from https://github.com/garybernhardt/dotfiles/blob/master/.vimrc)
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 nnoremap <leader>t :call RunTestFile()<cr>
-nnoremap <leader>a :call RunTests('')<cr>
+nnoremap <leader>a :call RunTests(' ')<cr>
 
 function! RunTestFile(...)
     if a:0
@@ -270,11 +273,11 @@ function! RunTests(filename)
       :w
     end
 
-    if filereadable("bin/cucumber") && a:filename =~ '.feature\>\|'
+    if filereadable("bin/cucumber") && a:filename =~ '.feature\>\| '
       exec ":!bin/cucumber " . a:filename
     end
 
-    if filereadable("bin/rspec") && a:filename =~ '_spec.rb\|'
+    if filereadable("bin/rspec") && a:filename =~ '_spec.rb\| '
       exec ":!bin/rspec --color " . a:filename
     elseif filereadable("Gemfile") && strlen(glob("spec/**/*.rb"))
       exec ":!bundle exec rspec --color " . a:filename
@@ -282,6 +285,8 @@ function! RunTests(filename)
       exec ":!bin/rails test " . a:filename
     elseif filereadable("mix.exs") && strlen(glob("test/**/*.exs"))
       exec ":!mix test " . a:filename
+    elseif strlen(glob("**/*_test.exs"))
+      exec ":!elixir *_test.exs"
     end
 endfunction
 
