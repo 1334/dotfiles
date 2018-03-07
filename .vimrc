@@ -36,6 +36,7 @@ Plugin 'vim-ruby/vim-ruby'
 Plugin 'tpope/vim-rails'
 Plugin 'tpope/vim-bundler'
 Plugin 'tpope/vim-rake'
+Plugin 'tpope/vim-cucumber'
 
 call vundle#end()
 
