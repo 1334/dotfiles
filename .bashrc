@@ -4,20 +4,8 @@ export PS1='[\u@\h \W$(vcprompt -f " (%b%m)" -M "*")]$ '
 
 export EDITOR=vim
 
-if hash brew 2>/dev/null; then
-  export RBENV_ROOT=/usr/local/var/rbenv
-
-  if [ -f $(brew --prefix)/etc/bash_completion  ]; then
-    . $(brew --prefix)/etc/bash_completion
-  fi
-fi
-
 # custom PATH
-export PATH="$HOME/.rbenv/bin:$HOME/bin:/usr/local/bin:$PATH"
-
-# init rbenv
-eval "$(rbenv init -)"
-
+export PATH="$HOME/bin:/usr/local/bin:$PATH"
 export PATH="./bin:$PATH"
 
 # enable iex shell history
@@ -35,3 +23,10 @@ if hash osascript 2>/dev/null;then
   fi
 }
 fi
+
+if [ -f /usr/local/share/bash-completion/bash_completion ]; then
+  . /usr/local/share/bash-completion/bash_completion
+fi
+
+# asdf version manager
+source /usr/local/opt/asdf/asdf.sh

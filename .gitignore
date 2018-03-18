@@ -23,6 +23,7 @@
 .FileSync
 .fontconfig
 .gem
+.gnupg/
 .heroku
 .hex/
 .hgignore_global
