@@ -254,7 +254,7 @@ function! RunTestFile(...)
     endif
 
     " Are we in a test file?
-    let in_test_file = match(expand("%"), '\(_spec.rb\|_test.rb\|.feature\|_test.exs\|_test.js\)$') != -1
+    let in_test_file = match(expand("%"), '\(_spec.rb\|_test.rb\|.feature\|_test.exs\|[_-]test.js\)$') != -1
 
     " Run the tests for the previously-marked file (or the current file if
     " it's a test).
@@ -291,7 +291,7 @@ function! RunTests(filename)
       exec ":!mix test " . a:filename
     elseif strlen(glob("**/*_test.exs"))
       exec ":!elixir *_test.exs"
-    elseif filereadable("package.json") && strlen(glob("test/**/*_test.js"))
+    elseif filereadable("package.json") && strlen(glob("test/**/*test.js"))
       exec ":!npm test " . a:filename
     end
 endfunction
