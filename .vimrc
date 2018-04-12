@@ -127,6 +127,12 @@ set completeopt=preview,menuone
 " supertab configuration
 let g:SuperTabDefaultCompletionType = "context"
 
+" snipmate configuration
+let g:snipMate = {}
+let g:snipMate.scope_aliases = {}
+" load mocha snippets for js files
+let g:snipMate.scope_aliases['javascript'] = 'javascript,javascript-mocha'
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " ARROW KEYS ARE UNACCEPTABLE
 " use them to resize windows
