@@ -297,8 +297,12 @@ function! RunTests(filename)
       exec ":!mix test " . a:filename
     elseif strlen(glob("**/*_test.exs"))
       exec ":!elixir *_test.exs"
+    elseif filereadable("package.json") && strlen(a:filename) == 1
+      exec ":!npm run test:all"
+    elseif filereadable("package.json") && a:filename =~ 'test/features/.\+test.js'
+      exec ":!npm run test:feature " . a:filename
     elseif filereadable("package.json") && strlen(glob("test/**/*test.js"))
-      exec ":!npm test " . a:filename
+      exec ":!npm run test " . a:filename
     end
 endfunction
 
