@@ -302,7 +302,7 @@ function! RunTests(filename)
     elseif filereadable("package.json") && a:filename =~ 'test/features/.\+test.js'
       exec ":!npm run test:feature " . a:filename
     elseif filereadable("package.json") && strlen(glob("test/**/*test.js"))
-      exec ":!npm run test " . a:filename
+      exec ":!npm run test:mocha " . a:filename
     end
 endfunction
 
