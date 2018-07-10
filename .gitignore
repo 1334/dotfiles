@@ -11,6 +11,7 @@
 .berkshelf
 .bundle/
 .cache
+.cmdline_history
 .config/
 .cups/
 .CFUserTextEncoding
@@ -67,6 +68,7 @@ lesshst
 Adlm
 Applications
 code
+cw
 CloudStation
 data
 Desktop
