@@ -15,6 +15,7 @@ Plugin 'MarcWeber/vim-addon-mw-utils'
 Plugin 'tomtom/tlib_vim'
 Plugin 'garbas/vim-snipmate'
 Plugin 'honza/vim-snippets'
+Plugin 'rafi/awesome-vim-colorschemes'
 
 " Generic Programming
 Plugin 'jiangmiao/auto-pairs'
@@ -95,6 +96,12 @@ set laststatus=2                  " Show the status line all the time
 
 set exrc                          " enable per-directory .vimrc files
 set secure                        " disable unsafe commands in local .vimrc files
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" COLOR
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set t_Co=256
+colorscheme minimalist-isp
 
 " Useful status information at bottom of screen
 set statusline=[%n]\ %<%.99f\ %h%w%m%r%y\ %{exists('*CapsLockStatusline')?CapsLockStatusline():''}%=%-16(\ %l,%c-%v\ %)%P
@@ -260,7 +267,7 @@ function! RunTestFile(...)
     endif
 
     " Are we in a test file?
-    let in_test_file = match(expand("%"), '\(_spec.rb\|_test.rb\|.feature\|_test.exs\|[_-]test.js\)$') != -1
+    let in_test_file = match(expand("%"), '\(_spec.rb\|_test.rb\|.feature\|_test.exs\|[_-]test.js\|.spec.js\)$') != -1
 
     " Run the tests for the previously-marked file (or the current file if
     " it's a test).
@@ -303,6 +310,8 @@ function! RunTests(filename)
       exec ":!npm run test:feature " . a:filename
     elseif filereadable("package.json") && strlen(glob("test/**/*test.js"))
       exec ":!npm run test:mocha " . a:filename
+    elseif strlen(glob("**/*spec.js"))
+      exec "!jasmine " . a:filename
     end
 endfunction
 
