@@ -1,0 +1,9 @@
+{
+    "workbench.statusBar.visible": true,
+    "files.trimTrailingWhitespace": true,
+    "telemetry.enableTelemetry": false,
+    "workbench.colorTheme": "Monokai",
+    "editor.minimap.enabled": false,
+    "workbench.editor.showTabs": true,
+    "workbench.activityBar.visible": false,
+}
