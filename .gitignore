@@ -1,8 +1,7 @@
-.vim/bundle/**
-.vim/bundle/vundle
 .account
 .adobe
 .apdisk
+.asdf
 .atom/
 .babel*
 .bash_logout
@@ -51,6 +50,7 @@ lesshst
 .Rprofile
 .rstudio-desktop/
 .sqlite_history
+.solargraph
 .SoulseekQt/
 .ssh/
 .subversion
@@ -62,6 +62,8 @@ lesshst
 .v8*
 .vagrant.d
 .vim
+.vim/bundle/**
+.vim/bundle/vundle
 .viminfo
 .vscode
 .Xauthority
