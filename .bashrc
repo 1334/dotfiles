@@ -29,4 +29,8 @@ if [ -f /usr/local/share/bash-completion/bash_completion ]; then
 fi
 
 # asdf version manager
-source /usr/local/opt/asdf/asdf.sh
+source $HOME/.asdf/asdf.sh
+source $HOME/.asdf/completions/asdf.bash
+
+# jsvu
+export PATH="${HOME}/.jsvu:${PATH}"
