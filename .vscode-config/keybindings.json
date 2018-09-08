@@ -29,5 +29,25 @@
 {
     "key": "shift+cmd+a",
     "command": "workbench.action.toggleActivityBarVisibility"
+},
+{
+    "key": "ctrl+alt+h",
+    "command": "extension.dash.specific",
+    "when": "editorTextFocus"
+},
+{
+    "key": "ctrl+h",
+    "command": "-extension.dash.specific",
+    "when": "editorTextFocus"
+},
+{
+    "key": "ctrl+alt+cmd+h",
+    "command": "extension.dash.all",
+    "when": "editorTextFocus"
+},
+{
+    "key": "ctrl+alt+h",
+    "command": "-extension.dash.all",
+    "when": "editorTextFocus"
 }
 ]
