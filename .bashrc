@@ -6,7 +6,6 @@ export EDITOR=vim
 
 # custom PATH
 export PATH="$HOME/bin:/usr/local/bin:$PATH"
-export PATH="./bin:$PATH"
 
 # enable iex shell history
 export ERL_AFLAGS="-kernel shell_history enabled"

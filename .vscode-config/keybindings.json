@@ -49,5 +49,13 @@
     "key": "ctrl+alt+h",
     "command": "-extension.dash.all",
     "when": "editorTextFocus"
+},
+{
+    "key": "ctrl+cmd+down",
+    "command": "workbench.action.splitEditorDown"
+},
+{
+    "key": "ctrl+cmd+up",
+    "command": "workbench.action.splitEditorUp"
 }
 ]
