@@ -57,5 +57,9 @@
 {
     "key": "ctrl+cmd+up",
     "command": "workbench.action.splitEditorUp"
+},
+{
+    "key": "alt+cmd+i",
+    "command": "editor.action.reindentlines"
 }
 ]

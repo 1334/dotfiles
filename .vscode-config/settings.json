@@ -8,4 +8,9 @@
     "window.zoomLevel": 0,
     "workbench.colorTheme": "Monokai",
     "vim.leader": ",",
+    "workbench.quickOpen.closeOnFocusLost": false,
+    "workbench.editor.enablePreviewFromQuickOpen": false,
+    "workbench.startupEditor": "none",
+    "git.confirmSync": false,
+    "editor.rulers": [80],
 }
