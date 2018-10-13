@@ -61,5 +61,21 @@
 {
     "key": "alt+cmd+i",
     "command": "editor.action.reindentlines"
+},
+{
+    "key": "alt+w",
+    "command": "editor.emmet.action.wrapWithAbbreviation"
+},
+{
+    "key": "ctrl+alt+cmd+d",
+    "command": "workbench.view.debug"
+},
+{
+    "key": "shift+cmd+d",
+    "command": "-workbench.view.debug"
+},
+{
+    "key": "shift+cmd+d",
+    "command": "editor.action.addSelectionToPreviousFindMatch"
 }
 ]

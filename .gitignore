@@ -69,6 +69,7 @@ lesshst
 .vim/bundle/vundle
 .viminfo
 .vscode
+.vscode-insiders
 .wget-hsts
 .Xauthority
 Adlm
