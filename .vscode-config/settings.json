@@ -18,4 +18,5 @@
     "editor.tabSize": 2,
     "editor.fontSize": 13,
     "javascript.updateImportsOnFileMove.enabled": "always",
+    "code-runner.enableAppInsights": false,
 }
