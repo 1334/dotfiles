@@ -32,8 +32,9 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'elixir-editors/vim-elixir'
 Plugin 'slashmili/alchemist.vim'
 
-" Javascript
+" Javascript / Typescript
 Plugin 'mustache/vim-mustache-handlebars'
+Plugin 'leafgarland/typescript-vim'
 
 " Ruby
 Plugin 'vim-ruby/vim-ruby'
