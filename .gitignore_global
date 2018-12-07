@@ -38,7 +38,7 @@ Thumbs.db
 *.swo
 
 # Custom files
-project_notes.txt
+project_notes*
 .idea
 
 #ctags file
@@ -49,3 +49,5 @@ tags
 
 # js
 node_modules/
+.cache/
+dist/

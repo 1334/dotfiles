@@ -77,5 +77,9 @@
 {
     "key": "shift+cmd+d",
     "command": "editor.action.addSelectionToPreviousFindMatch"
+},
+{
+    "key": "ctrl+cmd+r",
+    "command": "workbench.action.tasks.runTask"
 }
 ]
