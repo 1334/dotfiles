@@ -15,7 +15,9 @@
 .cups/
 .CFUserTextEncoding
 .CloudStation
+.czrc
 .dat020e.052
+.dbshell
 .dropbox
 .dropbox-master
 .DS_Store
@@ -28,16 +30,18 @@
 .hex/
 .hgignore_global
 .jsvu/
-lesshst
+.lesshst
 .local
 .lldb
 .mix/
+.mongorc*?
 .NERDTreeBookmarks
 .netrc
 .node*
 .npm
 .ovftool.ssldb
 .pcloud/
+.prisma/
 .psql_history
 .pow
 .pry_history
@@ -70,6 +74,7 @@ lesshst
 .viminfo
 .vscode
 .vscode-insiders
+.webpack*
 .wget-hsts
 .Xauthority
 Adlm
