@@ -51,3 +51,6 @@ tags
 node_modules/
 .cache/
 dist/
+
+# elixir
+.elixir_ls/
