@@ -5,7 +5,7 @@ export PS1='[\u@\h \W$(vcprompt -f " (%b%m)" -M "*")]$ '
 export EDITOR=vim
 
 # custom PATH
-export PATH="$HOME/bin:/usr/local/bin:$PATH"
+export PATH="$HOME/bin:/usr/local/bin:/usr/local/sbin:$PATH"
 
 # enable iex shell history
 export ERL_AFLAGS="-kernel shell_history enabled"
