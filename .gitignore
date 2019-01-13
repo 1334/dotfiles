@@ -21,6 +21,8 @@
 .dropbox
 .dropbox-master
 .DS_Store
+.elm/
+.erlang*
 .exercism.json
 .FileSync
 .fontconfig
@@ -77,6 +79,8 @@
 .webpack*
 .wget-hsts
 .Xauthority
+4doctors
+4d
 Adlm
 Applications
 code
