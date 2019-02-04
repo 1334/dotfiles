@@ -81,5 +81,23 @@
 {
     "key": "ctrl+cmd+r",
     "command": "workbench.action.tasks.runTask"
+},
+{
+    "key": "alt+cmd+m",
+    "command": "elm.make",
+    "when": "editorFocus && !findWidgetVisible && editorLangId == 'elm'"
+},
+{
+    "key": "cmd+f5",
+    "command": "-elm.make",
+    "when": "editorFocus && !findWidgetVisible && editorLangId == 'elm'"
+},
+{
+    "key": "ctrl+cmd+t",
+    "command": "workbench.action.showAllSymbols"
+},
+{
+    "key": "cmd+t",
+    "command": "-workbench.action.showAllSymbols"
 }
 ]
