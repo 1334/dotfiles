@@ -22,6 +22,7 @@
 .dropbox-master
 .DS_Store
 .elm/
+.emacs.d/
 .erlang*
 .exercism.json
 .FileSync
