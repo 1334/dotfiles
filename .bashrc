@@ -34,3 +34,6 @@ source $HOME/.asdf/completions/asdf.bash
 # jsvu
 export PATH="${HOME}/.jsvu:${PATH}"
 export PATH="/usr/local/opt/sqlite/bin:$PATH"
+
+alias e='emacsclient -nc --alternate-editor ""'
+
