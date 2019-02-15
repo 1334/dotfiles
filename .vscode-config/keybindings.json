@@ -11,10 +11,6 @@
         "when": "editorHasDefinitionProvider && editorTextFocus && !isInEmbeddedEditor"
     },
     {
-        "key": "shift+`",
-        "command": "workbench.action.terminal.focus"
-},
-{
     "key": "cmd+r",
     "command": "code-runner.run"
 },
