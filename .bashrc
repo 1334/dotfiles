@@ -1,4 +1,4 @@
-set -o vi
+# set -o vi
 # custom prompt
 export PS1='[\u@\h \W$(vcprompt -f " (%b%m)" -M "*")]$ '
 
@@ -35,5 +35,26 @@ source $HOME/.asdf/completions/asdf.bash
 export PATH="${HOME}/.jsvu:${PATH}"
 export PATH="/usr/local/opt/sqlite/bin:$PATH"
 
-alias e='emacsclient -nc --alternate-editor ""'
+# run emacs from the terminal
+alias e='emacs -nw'
 
+swap_emacs () {
+  if [ -f ~/.spacemacs ]; then
+    mv .{,no-}spacemacs
+    mv .{,spacemacs-}emacs.d
+    mv .{other-,}emacs.d
+  else
+    mv .{,other-}emacs.d
+    mv .{no-,}spacemacs
+    mv .{spacemacs-,}emacs.d
+  fi
+}
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/isp/bin/google-cloud-sdk/path.bash.inc' ]; then . '/Users/isp/bin/google-cloud-sdk/path.bash.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/isp/bin/google-cloud-sdk/completion.bash.inc' ]; then . '/Users/isp/bin/google-cloud-sdk/completion.bash.inc'; fi
+
+alias dokku='bash $HOME/.dokku/contrib/dokku_client.sh --rm'
+alias android_emulator='$HOME/Library/Android/sdk/emulator/emulator'
