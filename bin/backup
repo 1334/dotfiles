@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+set -e
+
+rsync -e"ssh -i /Users/isp/.ssh/id_rsa" -avzP --exclude 'node_modules' --exclude '_build' --exclude '.elixir_ls' --exclude '.DS_Store' --exclude '*.swp' --exclude '.#*' /Users/isp/4doctors/ isp@10.0.1.10:/volume1/homes/isp/4doctors/ --delete
