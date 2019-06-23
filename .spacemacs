@@ -31,29 +31,28 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
-     php
-     elm
-     yaml
-     ruby
-     javascript
-     html
-     elixir
-     ;; ----------------------------------------------------------------
-     ;; Example of useful layers you may want to use right away.
-     ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
-     ;; <M-m f e R> (Emacs style) to install them.
-     ;; ----------------------------------------------------------------
-     helm
      auto-completion
      better-defaults
+     dash
+     docker
+     elixir
+     elm
      emacs-lisp
-     osx
      git
-     ;; markdown
-     org
-     ;; (shell :variables
-     ;;        shell-default-height 30
-     ;;        shell-default-position 'bottom)
+     helm
+     html
+     javascript
+     markdown
+     (org :variables
+          org-enable-github-support t)
+     osx
+     php
+     ruby
+     (shell :variables
+            shell-default-height 30
+            shell-default-position 'bottom)
+     web-beautify
+     yaml
      ;; spell-checking
      ;; syntax-checking
      ;; version-control
@@ -62,7 +61,7 @@ values."
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '()
+   dotspacemacs-additional-packages '(prettier-js)
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
    ;; A list of packages that will not be installed and loaded.
@@ -134,7 +133,8 @@ values."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(spacemacs-dark
+   dotspacemacs-themes '(monokai
+                         spacemacs-dark
                          spacemacs-light)
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state t
@@ -142,7 +142,7 @@ values."
    ;; quickly tweak the mode-line size to make separators look not too crappy.
    dotspacemacs-default-font '("Source Code Pro"
                                :size 14
-                               :weight normal
+                               :weight light
                                :width normal
                                :powerline-scale 1.1)
    ;; The leader key
@@ -317,7 +317,48 @@ layers configuration.
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
-  ;; ;; elixir-mode hook
+  ;; config cursors to dispaly properly on the terminal
+  (unless (display-graphic-p)
+    (add-hook 'evil-insert-state-entry-hook (lambda () (send-string-to-terminal "\033[5 q")))
+    (add-hook 'evil-normal-state-entry-hook (lambda () (send-string-to-terminal "\033[0 q"))))
+  ;; run web-beautify before save
+  (eval-after-load 'js2-mode
+    '(add-hook 'js2-mode-hook
+               (lambda ()
+                 (add-hook 'before-save-hook 'web-beautify-js-buffer t t))))
+
+  ;; Or if you're using 'js-mode' (a.k.a 'javascript-mode')
+  (eval-after-load 'js
+    '(add-hook 'js-mode-hook
+               (lambda ()
+                 (add-hook 'before-save-hook 'web-beautify-js-buffer t t))))
+
+  (eval-after-load 'json-mode
+    '(add-hook 'json-mode-hook
+               (lambda ()
+                 (add-hook 'before-save-hook 'web-beautify-js-buffer t t))))
+
+  (eval-after-load 'sgml-mode
+    '(add-hook 'html-mode-hook
+               (lambda ()
+                 (add-hook 'before-save-hook 'web-beautify-html-buffer t t))))
+
+  (eval-after-load 'web-mode
+    '(add-hook 'web-mode-hook
+               (lambda ()
+                 (add-hook 'before-save-hook 'web-beautify-html-buffer t t))))
+
+  (eval-after-load 'css-mode
+    '(add-hook 'css-mode-hook
+               (lambda ()
+                 (add-hook 'before-save-hook 'web-beautify-css-buffer t t))))
+
+
+  ;; fix elixir format to make it work with asdf
+  (eval-after-load "elixir-mode"
+    '(defun elixir-format--mix-executable ()
+       (string-trim-right (shell-command-to-string "asdf which mix"))))
+
   (add-hook 'elixir-mode-hook
             (lambda () (add-hook 'before-save-hook 'elixir-format nil t)))
 
@@ -327,8 +368,8 @@ you should place your code here."
                                             (list "--dot-formatter"
                                                   (concat (locate-dominating-file buffer-file-name ".formatter.exs") ".formatter.exs")))
                                     (setq elixir-format-arguments nil))))
-
-
+  ;; aet elixir source code for alchemist
+  (setq alchemist-goto-elixir-source-dir "~/code/_source/elixir")
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
@@ -340,7 +381,7 @@ you should place your code here."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (transient lv org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download htmlize gnuplot phpunit phpcbf php-extras php-auto-yasnippets drupal-mode php-mode elm-mode reformatter yaml-mode unfill mwim rvm ruby-tools ruby-test-mode rubocop rspec-mode robe rbenv rake minitest chruby bundler inf-ruby web-beautify livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc company-tern dash-functional tern coffee-mode web-mode tagedit slim-mode scss-mode sass-mode pug-mode helm-css-scss haml-mode emmet-mode company-web web-completion-data smeargle orgit magit-gitflow helm-gitignore helm-company helm-c-yasnippet gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link fuzzy evil-magit magit magit-popup git-commit with-editor company-statistics auto-yasnippet yasnippet ac-ispell auto-complete reveal-in-osx-finder pbcopy osx-trash osx-dictionary launchctl ob-elixir flycheck-mix flycheck-credo flycheck alchemist company elixir-mode ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint indent-guide hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist highlight evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu elisp-slime-nav dumb-jump f dash s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async))))
+    (mmm-mode markdown-toc markdown-mode gh-md dockerfile-mode docker tablist docker-tramp helm-dash dash-at-point evil-terminal-cursor-changer which-key web-mode ruby-test-mode robe paradox orgit expand-region anzu helm magit transient alert org-plus-contrib php-mode yaml-mode ws-butler winum web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package unfill toc-org tagedit spinner spaceline smeargle slim-mode scss-mode sass-mode rvm ruby-tools rubocop rspec-mode reveal-in-osx-finder restart-emacs rbenv rake rainbow-delimiters pug-mode popwin phpunit phpcbf php-extras php-auto-yasnippets persp-mode pcre2el pbcopy osx-trash osx-dictionary org-projectile org-present org-pomodoro org-mime org-download org-bullets open-junk-file ob-elixir neotree mwim move-text minitest magit-gitflow macrostep lv lorem-ipsum log4e livid-mode linum-relative link-hint launchctl json-mode js2-refactor js-doc indent-guide hydra hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot gntp gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-commit fuzzy flycheck-mix flycheck-credo flx-ido fill-column-indicator fancy-battery eyebrowse exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu emmet-mode elm-mode elisp-slime-nav dumb-jump drupal-mode diminish company-web company-tern company-statistics column-enforce-mode coffee-mode clean-aindent-mode chruby bundler auto-yasnippet auto-highlight-symbol auto-compile alchemist aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
