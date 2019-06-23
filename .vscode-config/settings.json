@@ -14,12 +14,13 @@
     "editor.rulers": [
         80
     ],
-    "files.associations": {"*.html.eex": "html"},
+    "files.associations": {
+        "*.html.eex": "HTML (Eex)"
+    },
     "editor.tabSize": 2,
     "editor.fontSize": 13,
     "javascript.updateImportsOnFileMove.enabled": "always",
     "code-runner.enableAppInsights": false,
-    "prettier.requireConfig": true,
     "editor.formatOnSave": true,
     "typescript.updateImportsOnFileMove.enabled": "always",
     "breadcrumbs.enabled": true,
@@ -31,5 +32,17 @@
     "ruby.format": "rubocop",
     "ruby.codeCompletion": "rcodetools",
     "ruby.intellisense": "rubyLocate",
-    "elixirLS.suggestSpecs": false
+    "elixirLS.suggestSpecs": false,
+    "prettier.requireConfig": true,
+    "workbench.statusBar.feedback.visible": false,
+    "elm.analyseEnabled": true,
+    "editor.suggestSelection": "first",
+    "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+    "[json]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
+    },
+    "[html]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "editor.multiCursorModifier": "ctrlCmd"
 }
