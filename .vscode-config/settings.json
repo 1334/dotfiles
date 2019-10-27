@@ -4,7 +4,7 @@
     "telemetry.enableTelemetry": false,
     "editor.minimap.enabled": false,
     "workbench.editor.showTabs": true,
-    "workbench.activityBar.visible": false,
+    "workbench.activityBar.visible": true,
     "window.zoomLevel": 0,
     "workbench.colorTheme": "Monokai",
     "workbench.quickOpen.closeOnFocusLost": false,
@@ -44,5 +44,6 @@
     "[html]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
-    "editor.multiCursorModifier": "ctrlCmd"
+    "editor.multiCursorModifier": "ctrlCmd",
+    "liveshare.featureSet": "insiders"
 }
