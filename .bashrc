@@ -40,13 +40,13 @@ alias e='emacs -nw'
 
 swap_emacs () {
   if [ -f ~/.spacemacs ]; then
-    mv .{,no-}spacemacs
-    mv .{,spacemacs-}emacs.d
-    mv .{other-,}emacs.d
+    mv ~/.{,no-}spacemacs
+    mv ~/.{,spacemacs-}emacs.d
+    mv ~/.{other-,}emacs.d
   else
-    mv .{,other-}emacs.d
-    mv .{no-,}spacemacs
-    mv .{spacemacs-,}emacs.d
+    mv ~/.{,other-}emacs.d
+    mv ~/.{no-,}spacemacs
+    mv ~/.{spacemacs-,}emacs.d
   fi
 }
 
@@ -58,3 +58,12 @@ if [ -f '/Users/isp/bin/google-cloud-sdk/completion.bash.inc' ]; then . '/Users/
 
 alias dokku='bash $HOME/.dokku/contrib/dokku_client.sh --rm'
 alias android_emulator='$HOME/Library/Android/sdk/emulator/emulator'
+
+cd () {
+    builtin cd "$@"
+    if [ -f .env ]; then
+        source .env
+    fi
+}
+
+cd .
