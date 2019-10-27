@@ -51,6 +51,7 @@ values."
      (shell :variables
             shell-default-height 30
             shell-default-position 'bottom)
+     syntax-checking
      web-beautify
      yaml
      ;; spell-checking
@@ -317,6 +318,9 @@ layers configuration.
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
+  ;; fix space jj
+  (spacemacs/set-leader-keys "jj" 'avy-goto-char-timer)
+
   ;; config cursors to dispaly properly on the terminal
   (unless (display-graphic-p)
     (add-hook 'evil-insert-state-entry-hook (lambda () (send-string-to-terminal "\033[5 q")))
@@ -326,6 +330,12 @@ you should place your code here."
     '(add-hook 'js2-mode-hook
                (lambda ()
                  (add-hook 'before-save-hook 'web-beautify-js-buffer t t))))
+
+  (eval-after-load 'js2-mode
+    '(add-hook 'js2-mode-hook #'add-node-modules-path))
+
+  (eval-after-load 'js-mode
+    '(add-hook 'js-mode-hook #'add-node-modules-path))
 
   ;; Or if you're using 'js-mode' (a.k.a 'javascript-mode')
   (eval-after-load 'js
@@ -381,10 +391,30 @@ you should place your code here."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (mmm-mode markdown-toc markdown-mode gh-md dockerfile-mode docker tablist docker-tramp helm-dash dash-at-point evil-terminal-cursor-changer which-key web-mode ruby-test-mode robe paradox orgit expand-region anzu helm magit transient alert org-plus-contrib php-mode yaml-mode ws-butler winum web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package unfill toc-org tagedit spinner spaceline smeargle slim-mode scss-mode sass-mode rvm ruby-tools rubocop rspec-mode reveal-in-osx-finder restart-emacs rbenv rake rainbow-delimiters pug-mode popwin phpunit phpcbf php-extras php-auto-yasnippets persp-mode pcre2el pbcopy osx-trash osx-dictionary org-projectile org-present org-pomodoro org-mime org-download org-bullets open-junk-file ob-elixir neotree mwim move-text minitest magit-gitflow macrostep lv lorem-ipsum log4e livid-mode linum-relative link-hint launchctl json-mode js2-refactor js-doc indent-guide hydra hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot gntp gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-commit fuzzy flycheck-mix flycheck-credo flx-ido fill-column-indicator fancy-battery eyebrowse exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu emmet-mode elm-mode elisp-slime-nav dumb-jump drupal-mode diminish company-web company-tern company-statistics column-enforce-mode coffee-mode clean-aindent-mode chruby bundler auto-yasnippet auto-highlight-symbol auto-compile alchemist aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell))))
+    (xterm-color powerline shell-pop prettier-js ox-gfm org-category-capture multi-term skewer-mode simple-httpd multiple-cursors js2-mode parent-mode projectile request dash-docs haml-mode gitignore-mode flycheck-pos-tip pos-tip flycheck-elm flycheck flx highlight with-editor smartparens iedit evil goto-chg undo-tree eshell-z eshell-prompt-extras esh-help reformatter f magit-popup json-snatcher json-reformat web-completion-data dash-functional tern inf-ruby bind-map bind-key yasnippet packed s company dash elixir-mode pkg-info epl avy helm-core async auto-complete popup mmm-mode markdown-toc markdown-mode gh-md dockerfile-mode docker tablist docker-tramp helm-dash dash-at-point evil-terminal-cursor-changer which-key web-mode ruby-test-mode robe paradox orgit expand-region anzu helm magit transient alert org-plus-contrib php-mode yaml-mode ws-butler winum web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package unfill toc-org tagedit spinner spaceline smeargle slim-mode scss-mode sass-mode rvm ruby-tools rubocop rspec-mode reveal-in-osx-finder restart-emacs rbenv rake rainbow-delimiters pug-mode popwin phpunit phpcbf php-extras php-auto-yasnippets persp-mode pcre2el pbcopy osx-trash osx-dictionary org-projectile org-present org-pomodoro org-mime org-download org-bullets open-junk-file ob-elixir neotree mwim move-text minitest magit-gitflow macrostep lv lorem-ipsum log4e livid-mode linum-relative link-hint launchctl json-mode js2-refactor js-doc indent-guide hydra hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot gntp gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-commit fuzzy flycheck-mix flycheck-credo flx-ido fill-column-indicator fancy-battery eyebrowse exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu emmet-mode elm-mode elisp-slime-nav dumb-jump drupal-mode diminish company-web company-tern company-statistics column-enforce-mode coffee-mode clean-aindent-mode chruby bundler auto-yasnippet auto-highlight-symbol auto-compile alchemist aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+(defun dotspacemacs/emacs-custom-settings ()
+  "Emacs custom settings.
+This is an auto-generated function, do not modify its content directly, use
+Emacs customize menu instead.
+This function is called at the very end of Spacemacs initialization."
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (add-node-modules-path mmm-mode markdown-toc markdown-mode gh-md dockerfile-mode docker tablist docker-tramp helm-dash dash-at-point evil-terminal-cursor-changer which-key web-mode ruby-test-mode robe paradox orgit expand-region anzu helm magit transient alert org-plus-contrib php-mode yaml-mode ws-butler winum web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package unfill toc-org tagedit spinner spaceline smeargle slim-mode scss-mode sass-mode rvm ruby-tools rubocop rspec-mode reveal-in-osx-finder restart-emacs rbenv rake rainbow-delimiters pug-mode popwin phpunit phpcbf php-extras php-auto-yasnippets persp-mode pcre2el pbcopy osx-trash osx-dictionary org-projectile org-present org-pomodoro org-mime org-download org-bullets open-junk-file ob-elixir neotree mwim move-text minitest magit-gitflow macrostep lv lorem-ipsum log4e livid-mode linum-relative link-hint launchctl json-mode js2-refactor js-doc indent-guide hydra hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot gntp gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-commit fuzzy flycheck-mix flycheck-credo flx-ido fill-column-indicator fancy-battery eyebrowse exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu emmet-mode elm-mode elisp-slime-nav dumb-jump drupal-mode diminish company-web company-tern company-statistics column-enforce-mode coffee-mode clean-aindent-mode chruby bundler auto-yasnippet auto-highlight-symbol auto-compile alchemist aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+)
