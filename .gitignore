@@ -26,6 +26,8 @@
 .dropbox-master
 .DS_Store
 .elm/
+.emacs.d/
+.other-emacs.d/
 .emulator_console_auth_token
 .erlang*
 .exercism.json
