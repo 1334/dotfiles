@@ -1,11 +1,11 @@
-# set -o vi
+set -o vi
 # custom prompt
 export PS1='[\u@\h \W$(vcprompt -f " (%b%m)" -M "*")]$ '
 
 export EDITOR=vim
 
 # custom PATH
-export PATH="$HOME/bin:/usr/local/bin:/usr/local/sbin:$PATH"
+export PATH="$HOME/bin:/usr/local/bin:/usr/local/sbin:$HOME/.cargo/bin:$HOME/.emacs.d/bin:$PATH"
 
 # enable iex shell history
 export ERL_AFLAGS="-kernel shell_history enabled"
@@ -26,6 +26,8 @@ fi
 if [ -f /usr/local/share/bash-completion/bash_completion ]; then
   . /usr/local/share/bash-completion/bash_completion
 fi
+
+[[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"
 
 # asdf version manager
 source $HOME/.asdf/asdf.sh
