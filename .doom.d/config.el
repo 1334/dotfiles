@@ -6,8 +6,8 @@
 
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
 ;; clients, file templates and snippets.
-(setq user-full-name "John Doe"
-      user-mail-address "john@doe.com")
+(setq user-full-name "Iñigo Solano"
+      user-mail-address "i@errstate.com")
 
 ;; Doom exposes five (optional) variables for controlling fonts in Doom. Here
 ;; are the three important ones:
@@ -24,7 +24,8 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-dark+)
+;; (setq doom-theme 'doom-dark+)
+(setq doom-theme 'doom-one)
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
@@ -44,12 +45,18 @@
 
 ;; Setup some keybindings for exunit and lsp-ui
 (map! :mode elixir-mode
-        :leader
-        :desc "Toggle file/test" :nve "ctf" #'exunit-toggle-file-and-test
-        :desc "Run all tests"   :nve  "cta"   #'exunit-verify-all
-        :desc "Run all in umbrella"   :nve  "ctA"   #'exunit-verify-all-in-umbrella
-        :desc "Re-run tests"   :nve  "ctr"   #'exunit-rerun
-        :desc "Run single test"   :nve  "ctt"   #'exunit-verify-single)
+      :leader
+      :desc "Toggle file/test" :nve "ctf" #'exunit-toggle-file-and-test
+      :desc "Run all tests"   :nve  "cta"   #'exunit-verify-all
+      :desc "Run all in umbrella"   :nve  "ctA"   #'exunit-verify-all-in-umbrella
+      :desc "Re-run tests"   :nve  "ctr"   #'exunit-rerun
+      :desc "Run single test"   :nve  "ctt"   #'exunit-verify-single)
+
+;; disable projectile cleverness for detecting projects
+;; tip by @Henrik
+;; https://discordapp.com/channels/406534637242810369/603399769015975996/697352633186386110
+(after! projectile
+  (remove-hook 'projectile-project-root-files-functions #'projectile-root-top-down))
 
 ;; custom key binds
 ;; (map! :leader :desc "Treemacs" "p t" #'treemacs)
@@ -67,6 +74,9 @@
 ;; To get information about any of these functions/macros, move the cursor over
 ;; the highlighted symbol at press 'K' (non-evil users must press 'C-c g k').
 ;; This will open documentation for it, including demos of how they are used.
-;;
+
+(set-popup-rules!
+  '(("^\\*exunit" :ignore t)))
+
 ;; You can also try 'gd' (or 'C-c g d') to jump to their definition and see how
 ;; they are implemented.
