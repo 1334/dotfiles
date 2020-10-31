@@ -1,99 +1,103 @@
 // Place your key bindings in this file to overwrite the defaults
 [
-    {
-        "key": "cmd+]",
-        "command": "editor.action.goToDeclaration",
-        "when": "editorHasDefinitionProvider && editorTextFocus && !isInEmbeddedEditor"
-    },
-    {
-        "key": "f12",
-        "command": "-editor.action.goToDeclaration",
-        "when": "editorHasDefinitionProvider && editorTextFocus && !isInEmbeddedEditor"
-    },
-    {
+  {
+    "key": "cmd+]",
+    "command": "editor.action.goToDeclaration",
+    "when": "editorHasDefinitionProvider && editorTextFocus && !isInEmbeddedEditor"
+  },
+  {
+    "key": "f12",
+    "command": "-editor.action.goToDeclaration",
+    "when": "editorHasDefinitionProvider && editorTextFocus && !isInEmbeddedEditor"
+  },
+  {
     "key": "cmd+r",
     "command": "code-runner.run"
-},
-{
+  },
+  {
     "key": "ctrl+alt+n",
     "command": "-code-runner.run"
-},
-{
+  },
+  {
     "key": "cmd+t",
     "command": "workbench.action.tasks.test"
-},
-{
+  },
+  {
     "key": "shift+cmd+a",
     "command": "workbench.action.toggleActivityBarVisibility"
-},
-{
+  },
+  {
     "key": "ctrl+alt+h",
     "command": "extension.dash.specific",
     "when": "editorTextFocus"
-},
-{
+  },
+  {
     "key": "ctrl+h",
     "command": "-extension.dash.specific",
     "when": "editorTextFocus"
-},
-{
+  },
+  {
     "key": "ctrl+alt+cmd+h",
     "command": "extension.dash.all",
     "when": "editorTextFocus"
-},
-{
+  },
+  {
     "key": "ctrl+alt+h",
     "command": "-extension.dash.all",
     "when": "editorTextFocus"
-},
-{
+  },
+  {
     "key": "ctrl+cmd+down",
     "command": "workbench.action.splitEditorDown"
-},
-{
+  },
+  {
     "key": "ctrl+cmd+up",
     "command": "workbench.action.splitEditorUp"
-},
-{
+  },
+  {
     "key": "alt+cmd+i",
     "command": "editor.action.reindentlines"
-},
-{
+  },
+  {
     "key": "alt+w",
     "command": "editor.emmet.action.wrapWithAbbreviation"
-},
-{
+  },
+  {
     "key": "ctrl+alt+cmd+d",
     "command": "workbench.view.debug"
-},
-{
+  },
+  {
     "key": "shift+cmd+d",
     "command": "-workbench.view.debug"
-},
-{
+  },
+  {
     "key": "shift+cmd+d",
     "command": "editor.action.addSelectionToPreviousFindMatch"
-},
-{
+  },
+  {
     "key": "ctrl+cmd+r",
     "command": "workbench.action.tasks.runTask"
-},
-{
+  },
+  {
     "key": "alt+cmd+m",
     "command": "elm.make",
     "when": "editorFocus && !findWidgetVisible && editorLangId == 'elm'"
-},
-{
+  },
+  {
     "key": "cmd+f5",
     "command": "-elm.make",
     "when": "editorFocus && !findWidgetVisible && editorLangId == 'elm'"
-},
-{
+  },
+  {
     "key": "ctrl+cmd+t",
     "command": "workbench.action.showAllSymbols"
-},
-{
+  },
+  {
     "key": "cmd+t",
     "command": "-workbench.action.showAllSymbols"
-}
+  },
+  {
+    "key": "alt+cmd+o",
+    "command": "outline.focus"
+  }
 ]

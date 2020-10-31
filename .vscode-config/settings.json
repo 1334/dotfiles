@@ -4,7 +4,7 @@
     "telemetry.enableTelemetry": false,
     "editor.minimap.enabled": false,
     "workbench.editor.showTabs": true,
-    "workbench.activityBar.visible": true,
+    "workbench.activityBar.visible": false,
     "window.zoomLevel": 0,
     "workbench.colorTheme": "Monokai",
     "workbench.quickOpen.closeOnFocusLost": false,
@@ -15,7 +15,9 @@
         80
     ],
     "files.associations": {
-        "*.html.eex": "HTML (Eex)"
+        "*.html.eex": "HTML (Eex)",
+        "*.html.leex": "HTML (Eex)",
+        "*.leex": "HTML (EEx)"
     },
     "editor.tabSize": 2,
     "editor.fontSize": 13,
@@ -40,9 +42,6 @@
     "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
     "[json]": {
         "editor.defaultFormatter": "vscode.json-language-features"
-    },
-    "[html]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
     "editor.multiCursorModifier": "ctrlCmd",
     "liveshare.featureSet": "insiders"
