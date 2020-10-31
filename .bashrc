@@ -9,6 +9,14 @@ export PATH="$HOME/bin:/usr/local/bin:/usr/local/sbin:$HOME/.cargo/bin:$HOME/.em
 
 # enable iex shell history
 export ERL_AFLAGS="-kernel shell_history enabled"
+export LC_ALL=en_US.UTF-8
+
+# --files: List files that would be searched but do not search
+# --no-ignore: Do not respect .gitignore, etc...
+# --hidden: Search hidden files and folders
+# --follow: Follow symlinks
+# --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
+export FZF_DEFAULT_COMMAND='rg --files --hidden --follow'
 
 #OSX exclusive
 if hash osascript 2>/dev/null;then
@@ -30,8 +38,8 @@ fi
 [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"
 
 # asdf version manager
-source $HOME/.asdf/asdf.sh
-source $HOME/.asdf/completions/asdf.bash
+source $(brew --prefix asdf)/asdf.sh
+source $(brew --prefix asdf)/completions/asdf.bash
 
 # jsvu
 export PATH="${HOME}/.jsvu:${PATH}"
@@ -39,6 +47,7 @@ export PATH="/usr/local/opt/sqlite/bin:$PATH"
 
 # run emacs from the terminal
 alias e='emacs -nw'
+alias vi=nvim
 
 swap_emacs () {
   if [ -f ~/.spacemacs ]; then
@@ -61,11 +70,5 @@ if [ -f '/Users/isp/bin/google-cloud-sdk/completion.bash.inc' ]; then . '/Users/
 alias dokku='bash $HOME/.dokku/contrib/dokku_client.sh --rm'
 alias android_emulator='$HOME/Library/Android/sdk/emulator/emulator'
 
-cd () {
-    builtin cd "$@"
-    if [ -f .env ]; then
-        source .env
-    fi
-}
-
-cd .
+# load direnv to  manage project specific env vars
+eval "$(direnv hook bash)"
