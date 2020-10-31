@@ -35,6 +35,7 @@ Thumbs.db
 # vim swap files
 *.swp
 *.swo
+.nvimrc
 
 # Custom files
 project_notes*
@@ -74,7 +75,10 @@ tramp
 .cask/
 dist/
 flycheck_*.el
-/server/
 .projectile
 .dir-locals.el
 /network-security.data
+
+# env files
+.env
+.envrc
