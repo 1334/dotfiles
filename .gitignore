@@ -51,11 +51,13 @@
 .hyper.js
 .hyper_plugins/
 .jsvu/
+.keras/
 .lesshst
 .local
 .lldb
 .mix/
 .mongorc*?
+.ntfs-for-mac-license-backup/
 .NERDTreeBookmarks
 .netrc
 .ngrok2/
@@ -94,6 +96,7 @@
 .sudo_as_admin_successful
 .SynologyDrive
 .swipl-dir-history/
+.tailwindcss/
 .Trash
 .uuid
 .v8*
