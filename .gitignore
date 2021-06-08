@@ -30,10 +30,9 @@
 .dvdcss/
 .eclipse/
 .elm/
-.emacs.d/auto-save-list
-.emacs.d/backups
-.emacs.d/elpa
-.other-emacs.d/
+**/auto-save-list
+**/backups
+**/elpa
 .elixir-ls/
 .elixir_ls_releases/
 .emulator_console_auth_token
