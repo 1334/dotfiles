@@ -1,5 +1,5 @@
 ruby 2.7.1
-erlang 23.1.1
-elixir 1.11.2-otp-23
-nodejs 12.18.2
+erlang 24.0.1
+elixir 1.12.1-otp-24
+nodejs 14.17.0
 elm 0.19.1
