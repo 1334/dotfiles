@@ -72,3 +72,6 @@ alias android_emulator='$HOME/Library/Android/sdk/emulator/emulator'
 
 # load direnv to  manage project specific env vars
 eval "$(direnv hook bash)"
+
+# to have erlang docs in iex
+export KERL_BUILD_DOCS="yes"
