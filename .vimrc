@@ -103,6 +103,8 @@ set secure                        " disable unsafe commands in local .vimrc file
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set t_Co=256
 colorscheme minimalist-isp
+let g:prettier#autoformat = 0
+autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue PrettierAsync
 
 " Useful status information at bottom of screen
 set statusline=[%n]\ %<%.99f\ %h%w%m%r%y\ %{exists('*CapsLockStatusline')?CapsLockStatusline():''}%=%-16(\ %l,%c-%v\ %)%P
@@ -329,7 +331,7 @@ function! <SID>SynStack()
 endfunc
 
 noremap <leader>b :NERDTreeToggle<cr>
-noremap <leader>p :CtrlP<cr>
+noremap <leader>p :Files<cr>
 
 let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard', 'find %s -type f']
 

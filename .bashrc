@@ -39,7 +39,7 @@ fi
 
 # asdf version manager
 source $(brew --prefix asdf)/asdf.sh
-source $(brew --prefix asdf)/completions/asdf.bash
+source /usr/local/etc/bash_completion.d/asdf.bash
 
 # jsvu
 export PATH="${HOME}/.jsvu:${PATH}"
