@@ -5,7 +5,7 @@ export PS1='[\u@\h \W$(vcprompt -f " (%b%m)" -M "*")]$ '
 export EDITOR=vim
 
 # custom PATH
-export PATH="$HOME/bin:/usr/local/bin:/usr/local/sbin:$HOME/.cargo/bin:$HOME/.emacs.d/bin:$PATH"
+export PATH="$HOME/bin:/usr/local/bin:/usr/local/sbin:$HOME/.cargo/bin:$HOME/.emacs.d/bin:$HOME/.emacses/doom/doom-emacs/bin:$PATH"
 
 # enable iex shell history
 export ERL_AFLAGS="-kernel shell_history enabled"
@@ -75,3 +75,5 @@ eval "$(direnv hook bash)"
 
 # to have erlang docs in iex
 export KERL_BUILD_DOCS="yes"
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
