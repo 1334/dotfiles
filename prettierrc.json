@@ -1,17 +1,10 @@
 {
-  "jsxBracketSameLine": true,
   "singleQuote": true,
   "semi": false,
   "overrides": [
     {
       "files": ".prettierrc",
       "options": { "parser": "json" }
-    },
-    {
-      "files": ["*.html.eex", "*.html.leex"],
-      "options": {
-        "parser": "html"
-      }
     }
   ]
 }

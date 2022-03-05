@@ -5,7 +5,14 @@ export PS1='[\u@\h \W$(vcprompt -f " (%b%m)" -M "*")]$ '
 export EDITOR=vim
 
 # custom PATH
-export PATH="$HOME/bin:/usr/local/bin:/usr/local/sbin:$HOME/.cargo/bin:$HOME/.emacs.d/bin:$HOME/.emacses/doom/doom-emacs/bin:$PATH"
+export PATH="$HOME/.elixir-ls/release:$HOME/bin:/usr/local/bin:/usr/local/sbin:$HOME/.cargo/bin:$HOME/.emacs.d/bin:$HOME/.emacses/doom/doom-emacs/bin:$PATH"
+# needed for brew grep to replace system grep
+export PATH="/usr/local/opt/grep/libexec/gnubin:$PATH"
+
+# asdf version manager
+source $(brew --prefix asdf)/libexec/asdf.sh
+source /usr/local/etc/bash_completion.d/asdf.bash
+
 
 # enable iex shell history
 export ERL_AFLAGS="-kernel shell_history enabled"
@@ -36,10 +43,6 @@ if [ -f /usr/local/share/bash-completion/bash_completion ]; then
 fi
 
 [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"
-
-# asdf version manager
-source $(brew --prefix asdf)/asdf.sh
-source /usr/local/etc/bash_completion.d/asdf.bash
 
 # jsvu
 export PATH="${HOME}/.jsvu:${PATH}"
