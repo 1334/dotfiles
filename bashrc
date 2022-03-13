@@ -11,7 +11,10 @@ source $(brew --prefix asdf)/libexec/asdf.sh
 # custom PATH
 export PATH="$(yarn global bin):$HOME/.elixir-ls/release:$HOME/bin:/usr/local/bin:/usr/local/sbin:$HOME/.cargo/bin:$HOME/.emacs.d/bin:$HOME/.emacses/doom/doom-emacs/bin:$PATH"
 # needed for brew grep to replace system grep
+# for intel chips
 export PATH="/usr/local/opt/grep/libexec/gnubin:$PATH"
+# for M1 chips
+export PATH="/opt/homebrew/opt/grep/libexec/gnubin:$PATH"
 
 # enable iex shell history
 export ERL_AFLAGS="-kernel shell_history enabled"
