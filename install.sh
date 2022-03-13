@@ -7,7 +7,7 @@ set -e
 #==============
 
 
-ignoreFiles=(`basename "$0"` ".git")
+ignoreFiles=(`basename "$0"` ".git" "karabiner")
 
 # make sure we are on the dotfiles folder
 cd ~/.dotfiles
@@ -26,6 +26,10 @@ done
 
 # bin is not a dotfolder
 mv ~/.bin ~/bin
+
+# karabiner needs to be symlinked to ~/.config/karabiner
+ln -s ~/.dotfiles/karabiner ~/.config
+
 
 echo -e "\n====== Done! ======\n"
 
