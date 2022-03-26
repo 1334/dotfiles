@@ -52,3 +52,4 @@
 (package! jest)
 (package! import-js)
 (package! polymode)
+(package! lsp-tailwindcss :recipe (:host github :repo "merrickluo/lsp-tailwindcss"))

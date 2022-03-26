@@ -85,6 +85,8 @@
   :after (typescript-mode)
   :hook (typescript-mode . jest-minor-mode))
 
+(use-package! lsp-tailwindcss)
+
 (hl-line-mode 1)
 (blink-cursor-mode -1)
 
