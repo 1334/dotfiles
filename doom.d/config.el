@@ -43,6 +43,7 @@
 ;; JS/TS customizations
 (set-lookup-handlers! 'tide-mode :async t
   :definition #'tide-jump-to-definition)
+(setenv "NODE_OPTIONS" "--max-old-space-size=8192")
 
 ;; elixir config
 (add-to-list 'exec-path "/Users/isp/.elixir-ls/release")
