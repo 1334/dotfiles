@@ -30,7 +30,24 @@
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It kust be set before org loads!
-(setq org-directory "~/org/")
+(use-package! org
+  :custom
+  (org-directory "~/org/"))
+
+(use-package! org-roam
+  :custom
+  (org-roam-directory "~/roam")
+  (org-roam-capture-templates
+   '(("d" "default" plain "%?" :target
+      (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
+      :unnarrowed t)
+     ("l" "programming language" plain
+      (file "~/roam/templates/programming_language.org")
+      :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+titl
+e: ${title}\n")
+      :unnarrowed t)
+     )))
+
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
