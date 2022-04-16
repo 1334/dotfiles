@@ -53,6 +53,9 @@ e: ${title}\n")
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
 (setq display-line-numbers-type t)
 
+;; make avy jump all windows
+(setq avy-all-windows t)
+
 ;; use native MacOS fullscreen
 (setq ns-use-native-fullscreen t)
 (add-hook 'window-setup-hook 'toggle-frame-fullscreen t)
@@ -76,6 +79,8 @@ e: ${title}\n")
 
 (map! "C-}" #'centaur-tabs-forward)
 (map! "C-{" #'centaur-tabs-backward)
+(map! "C-M-{" #'centaur-tabs-move-current-tab-to-left)
+(map! "C-M-}" #'centaur-tabs-move-current-tab-to-right)
 
 ;; Here are some additional functions/macros that could help you configure Doom:
 ;;
