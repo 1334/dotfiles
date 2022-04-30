@@ -56,6 +56,9 @@ e: ${title}\n")
 ;; make avy jump all windows
 (setq avy-all-windows t)
 
+(setq treemacs-git-mode 'deferred)
+(setq doom-themes-treemacs-theme "doom-colors")
+
 ;; use native MacOS fullscreen
 (setq ns-use-native-fullscreen t)
 (add-hook 'window-setup-hook 'toggle-frame-fullscreen t)
