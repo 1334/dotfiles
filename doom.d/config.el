@@ -28,6 +28,65 @@
 ;; `load-theme' function. This is the default:
 (setq doom-theme 'doom-molokai)
 
+;; Here are some additional functions/macros that could help you configure Doom:
+;;
+;; - `load!' for loading external *.el files relative to this one
+;; - `use-package!' for configuring packages
+;; - `after!' for running code after a package has loaded
+;; - `add-load-path!' for adding directories to the `load-path', relative to
+;;   this file. Emacs searches the `load-path' when you load packages with
+;;   `require' or `use-package'.
+;; - `map!' for binding new keys
+;;
+;; To get information about any of these functions/macros, move the cursor over
+;; the highlighted symbol at press 'K' (non-evil users must press 'C-c c k').
+;; This will open documentation for it, including demos of how they are used.
+;;
+;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
+;; they are implemented.
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;       GENERAL          ;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; highlight current line
+(hl-line-mode 1)
+;; don't want cursor to blink like a maniac
+(blink-cursor-mode -1)
+
+;; Revert buffers whne the underlying file has changed
+(global-auto-revert-mode 1)
+
+;; This determines the style of line numbers in effect. If set to `nil', line
+;; numbers are disabled. For relative line numbers, set this to `relative'.
+(setq display-line-numbers-type t)
+
+;; make avy jump all windows
+(setq avy-all-windows t)
+
+(setq treemacs-git-mode 'deferred)
+(setq doom-themes-treemacs-theme "doom-colors")
+
+;; use native MacOS fullscreen
+(setq ns-use-native-fullscreen t)
+(add-hook 'window-setup-hook 'toggle-frame-fullscreen t)
+
+(map! :leader
+      ;; map spc jj to what it used to be in spacemacs
+      :desc "goto" :nve "jj" (cmd! (let ((current-prefix-arg t)) (evil-avy-goto-char-timer)))
+      ;; show flycheck errors for the current file
+      :desc "list errors" :nve "cf" #'list-flycheck-errors
+      )
+
+(map! "C-}" #'centaur-tabs-forward)
+(map! "C-{" #'centaur-tabs-backward)
+(map! "C-M-{" #'centaur-tabs-move-current-tab-to-left)
+(map! "C-M-}" #'centaur-tabs-move-current-tab-to-right)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;       ORG MODE         ;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It kust be set before org loads!
 (use-package! org
@@ -49,71 +108,75 @@ e: ${title}\n")
      )))
 
 
-;; This determines the style of line numbers in effect. If set to `nil', line
-;; numbers are disabled. For relative line numbers, set this to `relative'.
-(setq display-line-numbers-type t)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;       JS / TS          ;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; make avy jump all windows
-(setq avy-all-windows t)
-
-(setq treemacs-git-mode 'deferred)
-(setq doom-themes-treemacs-theme "doom-colors")
-
-;; use native MacOS fullscreen
-(setq ns-use-native-fullscreen t)
-(add-hook 'window-setup-hook 'toggle-frame-fullscreen t)
-
-;; JS/TS customizations
 (set-lookup-handlers! 'tide-mode :async t
   :definition #'tide-jump-to-definition)
 (setenv "NODE_OPTIONS" "--max-old-space-size=8192")
 
-;; elixir config
+(map! :after js2-mode
+      :localleader
+      :map js2-mode-map
+      (:prefix ("t" . "test")
+       :desc "jest file dwim" :nve "t" #'jest-file-dwim
+       :desc "repeat last test" :nve "r" #'jest-repeat
+       :desc "test at line" :nve "l" #'jest-function
+       :desc "all" :nve "a" #'jest))
+
+(map! :after typescript-mode
+      :localleader
+      :map typescript-mode-map
+      (:prefix ("t" . "test")
+       :desc "jest file dwim" :nve "t" #'jest-file-dwim
+       :desc "repeat last test" :nve "r" #'jest-repeat
+       :desc "test at line" :nve "l" #'jest-function
+       :desc "all" :nve "a" #'jest))
+
+(use-package! tide
+  :config
+  (map! :localleader
+        :map tide-mode-map
+        :desc "tide fix" :nve "." #'tide-fix))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;       ELIXIR           ;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (add-to-list 'exec-path "/Users/isp/.elixir-ls/release")
 
+;; add heex files to html lsp mode
+(after! lsp-mode (add-to-list 'lsp-language-id-configuration '(".*\\.heex$" . "html")))
 
 
-(map! :leader
-      ;; map spc jj to what it used to be in spacemacs
-      :desc "goto" :nve "jj" (cmd! (let ((current-prefix-arg t)) (evil-avy-goto-char-timer)))
-      ;; show flycheck errors for the current file
-      :desc "list errors" :nve "cf" #'list-flycheck-errors
-      )
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;         WEB            ;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(map! "C-}" #'centaur-tabs-forward)
-(map! "C-{" #'centaur-tabs-backward)
-(map! "C-M-{" #'centaur-tabs-move-current-tab-to-left)
-(map! "C-M-}" #'centaur-tabs-move-current-tab-to-right)
+(setq-hook! 'json-mode-hook +format-with-lsp nil)
 
-;; Here are some additional functions/macros that could help you configure Doom:
-;;
-;; - `load!' for loading external *.el files relative to this one
-;; - `use-package!' for configuring packages
-;; - `after!' for running code after a package has loaded
-;; - `add-load-path!' for adding directories to the `load-path', relative to
-;;   this file. Emacs searches the `load-path' when you load packages with
-;;   `require' or `use-package'.
-;; - `map!' for binding new keys
-;;
-;; To get information about any of these functions/macros, move the cursor over
-;; the highlighted symbol at press 'K' (non-evil users must press 'C-c c k').
-;; This will open documentation for it, including demos of how they are used.
-;;
-;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
-;; they are implemented.
+(use-package! lsp-tailwindcss
+  :init
+  (setq lsp-tailwindcss-add-on-mode t)
+  (add-hook! before-save #'lsp-tailwindcss-rustywind-before-save)
+  :config
+  (setq lsp-tailwindcss-emmet-completions (featurep 'emmet-mode)))
+  ;; (setq lsp-tailwindcss-major-modes '(web-mode css-mode rjsx-mode typescript-tsx-mode)
+  ;;       lsp-tailwindcss-emmet-completions (featurep 'emmet-mode))
+  ;; (add-to-list 'lsp-language-id-configuration '(".*\\.heex$" . "html")))
 
-(use-package! jest
-  :after (js2-mode)
-  :hook (js2-mode . jest-minor-mode))
+(set-docsets! '(web-mode css-mode rjsx-mode typescript-tsx-mode)
+              :add "Tailwind_CSS")
 
-(use-package! jest
-  :after (typescript-mode)
-  :hook (typescript-mode . jest-minor-mode))
 
-(use-package! lsp-tailwindcss)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;         TEMP           ;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(hl-line-mode 1)
-(blink-cursor-mode -1)
-
-;; Revert buffers whne the nderlying file has changed
-(global-auto-revert-mode 1)
+;; FIX for centaur tabs not showing bug
+(define-advice centaur-tabs-project-name (:override () fix)
+  (let ((project-name (car (last (project-current)))))
+    (if project-name
+        (format "Project: %s" (expand-file-name project-name))
+      centaur-tabs-common-group-name)))
