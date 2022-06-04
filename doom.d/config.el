@@ -169,6 +169,10 @@ e: ${title}\n")
 (set-docsets! '(web-mode css-mode rjsx-mode typescript-tsx-mode)
               :add "Tailwind_CSS")
 
+(setq! lsp-html-format-enable -1)
+
+(setq-hook! 'yaml-mode-hook +format-with-lsp nil)
+(setq-hook! 'json-mode-hook +format-with-lsp nil)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;         TEMP           ;;;
