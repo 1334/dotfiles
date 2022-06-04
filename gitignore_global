@@ -16,7 +16,6 @@
 *.jar
 *.rar
 *.tar
-*.zip
 
 # Logs and databases
 *.log
@@ -51,6 +50,7 @@ tags
 node_modules/
 .cache/
 dist/
+junit.xml
 
 # elixir
 .elixir_ls/
