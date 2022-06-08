@@ -84,3 +84,6 @@ eval "$(direnv hook bash)"
 export KERL_BUILD_DOCS="yes"
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+# hide macos deprectaion warning
+export BASH_SILENCE_DEPRECATION_WARNING=1
