@@ -91,5 +91,7 @@ export KERL_BUILD_DOCS="yes"
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
+[ -f ~/.bashrc-secrets ] && source ~/.bashrc-secrets
+
 # hide macos deprectaion warning
 export BASH_SILENCE_DEPRECATION_WARNING=1

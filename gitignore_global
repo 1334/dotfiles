@@ -82,3 +82,7 @@ flycheck_*.el
 # env files
 .env
 .envrc
+
+# ignore .org files
+todo.org
+notes.org
