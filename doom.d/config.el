@@ -150,6 +150,8 @@ e: ${title}\n")
                      "Major mode for editing HEEx files")
 (add-to-list 'auto-mode-alist '("\\.heex?\\'" . heex-mode))
 
+(add-hook 'heex-mode-hook #'lsp)
+
 ;; add heex files to html lsp mode
 (after! lsp-mode (add-to-list 'lsp-language-id-configuration '(".*\\.heex$" . "html")))
 
