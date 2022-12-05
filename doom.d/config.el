@@ -26,7 +26,7 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-molokai)
+(setq doom-theme 'doom-opera)
 
 ;; Here are some additional functions/macros that could help you configure Doom:
 ;;
@@ -88,7 +88,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; If you use `org' and don't want your org files in the default location below,
-;; change `org-directory'. It kust be set before org loads!
+;; change `org-directory'. It must be set before org loads!
 (use-package! org
   :custom
   (org-directory "~/org/"))
