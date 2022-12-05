@@ -144,17 +144,18 @@ e: ${title}\n")
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;       ELIXIR           ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; (add-to-list 'exec-path "/Users/isp/.elixir-ls/release")
 
 (define-derived-mode heex-mode web-mode "HEEx"
                      "Major mode for editing HEEx files")
-(add-to-list 'auto-mode-alist '("\\.heex?\\'" . heex-mode))
+
+(add-to-list 'auto-mode-alist '("\\.heex\\'" . heex-mode))
 
 (add-hook 'heex-mode-hook #'lsp)
 
 ;; add heex files to html lsp mode
-(after! lsp-mode (add-to-list 'lsp-language-id-configuration '(".*\\.heex$" . "html")))
+(after! lsp-mode (add-to-list 'lsp-language-id-configuration '(heex-mode . "html")))
 
+;; save heex files using the elixir formatter
 (add-hook 'heex-mode-hook
           (lambda () (add-hook 'before-save-hook #'elixir-format nil 'local)))
 
