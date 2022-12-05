@@ -182,12 +182,5 @@ e: ${title}\n")
 (setq-hook! 'json-mode-hook +format-with-lsp nil)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;         TEMP           ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; FIX for centaur tabs not showing bug
-(define-advice centaur-tabs-project-name (:override () fix)
-  (let ((project-name (car (last (project-current)))))
-    (if project-name
-        (format "Project: %s" (expand-file-name project-name))
-      centaur-tabs-common-group-name)))
