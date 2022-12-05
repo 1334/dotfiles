@@ -153,6 +153,9 @@ e: ${title}\n")
 ;; add heex files to html lsp mode
 (after! lsp-mode (add-to-list 'lsp-language-id-configuration '(".*\\.heex$" . "html")))
 
+(add-hook 'heex-mode-hook
+          (lambda () (add-hook 'before-save-hook #'elixir-format nil 'local)))
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;         WEB            ;;;
