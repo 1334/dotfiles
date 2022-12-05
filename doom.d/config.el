@@ -144,7 +144,11 @@ e: ${title}\n")
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;       ELIXIR           ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(add-to-list 'exec-path "/Users/isp/.elixir-ls/release")
+;; (add-to-list 'exec-path "/Users/isp/.elixir-ls/release")
+
+(define-derived-mode heex-mode web-mode "HEEx"
+                     "Major mode for editing HEEx files")
+(add-to-list 'auto-mode-alist '("\\.heex?\\'" . heex-mode))
 
 ;; add heex files to html lsp mode
 (after! lsp-mode (add-to-list 'lsp-language-id-configuration '(".*\\.heex$" . "html")))
