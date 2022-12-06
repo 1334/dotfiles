@@ -182,5 +182,27 @@ e: ${title}\n")
 (setq-hook! 'json-mode-hook +format-with-lsp nil)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;       POLYMODE         ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(use-package! polymode
+  :config
+  (define-hostmode poly-elixir-hostmode :mode 'elixir-mode)
+  (define-innermode poly-elixir-innermode
+    :mode 'heex-mode
+    :head-matcher (rx line-start (* space) "~H" (= 3 (char "\"")) line-end)
+    :tail-matcher (rx line-start (* space) (= 3 (char "\"")) line-end)
+    :head-mode 'host
+    :tail-mode 'host
+    :allow-nested nil)
+  (define-polymode poly-elixir-mode
+    :hostmode 'poly-elixir-hostmode
+    :innermodes '(poly-elixir-innermode))
+  (add-to-list 'auto-mode-alist '("\\.ex?\\'" . poly-elixir-mode))
+  (add-to-list 'polymode-run-these-after-change-functions-in-other-buffers 'lsp-on-change)
+  (add-to-list 'polymode-run-these-before-change-functions-in-other-buffers 'lsp-before-change)
+  )
 
+;; workaround for polymode described
+;; https://github.com/polymode/polymode/issues/316
+(setq-hook! elixir-mode polymode-lsp-integration nil)
+(setq-hook! heex-mode polymode-lsp-integration nil)
