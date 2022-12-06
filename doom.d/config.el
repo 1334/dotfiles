@@ -176,10 +176,17 @@ e: ${title}\n")
 (set-docsets! '(web-mode css-mode rjsx-mode typescript-tsx-mode heex-mode)
               :add "Tailwind_CSS")
 
+
 (setq! lsp-html-format-enable -1)
 
+(setq-hook! 'html-mode-hook +format-with-lsp nil)
 (setq-hook! 'yaml-mode-hook +format-with-lsp nil)
+(setq-hook! 'javascript-mode-hook +format-with-lsp nil)
+(setq-hook! 'typescript-mode-hook +format-with-lsp nil)
+(setq-hook! 'typescript-tsx-mode-hook +format-with-lsp nil)
+(setq-hook! 'rjsx-mode-hook +format-with-lsp nil)
 (setq-hook! 'json-mode-hook +format-with-lsp nil)
+(setq-hook! 'json-mode-hook +format-with 'prettier)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;       POLYMODE         ;;;
