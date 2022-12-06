@@ -163,20 +163,17 @@ e: ${title}\n")
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;         WEB            ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(setq-hook! 'json-mode-hook +format-with-lsp nil)
-
 (use-package! lsp-tailwindcss
   :init
   (setq lsp-tailwindcss-add-on-mode t)
-  (add-hook! before-save #'lsp-tailwindcss-rustywind-before-save)
+  (add-hook 'before-save-hook 'lsp-tailwindcss-rustywind-before-save)
   :config
-  (setq lsp-tailwindcss-emmet-completions (featurep 'emmet-mode)))
-  ;; (setq lsp-tailwindcss-major-modes '(web-mode css-mode rjsx-mode typescript-tsx-mode)
-  ;;       lsp-tailwindcss-emmet-completions (featurep 'emmet-mode))
-  ;; (add-to-list 'lsp-language-id-configuration '(".*\\.heex$" . "html")))
+  (add-to-list 'lsp-tailwindcss-major-modes 'typescript-tsx-mode :append)
+  (add-to-list 'lsp-tailwindcss-major-modes 'elixir-mode :append)
+  (add-to-list 'lsp-tailwindcss-major-modes 'heex-mode :append)
+  :after (lsp-mode))
 
-(set-docsets! '(web-mode css-mode rjsx-mode typescript-tsx-mode)
+(set-docsets! '(web-mode css-mode rjsx-mode typescript-tsx-mode heex-mode)
               :add "Tailwind_CSS")
 
 (setq! lsp-html-format-enable -1)
