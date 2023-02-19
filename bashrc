@@ -9,7 +9,7 @@ eval "$(/opt/homebrew/bin/brew shellenv)"
 source $(brew --prefix asdf)/libexec/asdf.sh
 
 # custom PATH
-export PATH="$(yarn global bin):$HOME/.elixir-ls/release:$HOME/bin:/usr/local/bin:/usr/local/sbin:$HOME/.cargo/bin:$HOME/.emacs.d/bin:$HOME/.emacses/doom/doom-emacs/bin:$PATH"
+export PATH="$(yarn global bin):$HOME/.elixir-ls/release:$HOME/bin:/usr/local/bin:/usr/local/sbin:$HOME/.cargo/bin:$HOME/.emacs.d/bin:$HOME/.emacses/doom/doom-emacs/bin:$HOME/.local/bin:$PATH"
 # needed for brew grep to replace system grep
 # for intel chips
 export PATH="/usr/local/opt/grep/libexec/gnubin:$PATH"
