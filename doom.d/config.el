@@ -83,6 +83,8 @@
 (map! "C-M-{" #'centaur-tabs-move-current-tab-to-left)
 (map! "C-M-}" #'centaur-tabs-move-current-tab-to-right)
 
+(map! "gV" #'xref-find-definitions-other-window) ;; also mapped to C-x 4 .
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;       ORG MODE         ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -171,6 +173,7 @@ e: ${title}\n")
   (add-to-list 'lsp-tailwindcss-major-modes 'typescript-tsx-mode :append)
   (add-to-list 'lsp-tailwindcss-major-modes 'elixir-mode :append)
   (add-to-list 'lsp-tailwindcss-major-modes 'heex-mode :append)
+  (add-to-list 'lsp-tailwindcss-major-modes 'web-mode :append)
   :after (lsp-mode))
 
 (set-docsets! '(web-mode css-mode rjsx-mode typescript-tsx-mode heex-mode)
