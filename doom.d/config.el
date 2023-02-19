@@ -83,7 +83,7 @@
 (map! "C-M-{" #'centaur-tabs-move-current-tab-to-left)
 (map! "C-M-}" #'centaur-tabs-move-current-tab-to-right)
 
-(map! "gV" #'xref-find-definitions-other-window) ;; also mapped to C-x 4 .
+(map! :n "gV" #'xref-find-definitions-other-window) ;; also mapped to C-x 4 .
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;       ORG MODE         ;;;
