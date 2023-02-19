@@ -11,3 +11,5 @@ ruby 3.0.1
 rust 1.58.1
 sbcl 2.2.6
 yarn 1.22.19
+haskell 9.4.4
+swiprolog 9.0.4
