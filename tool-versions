@@ -1,11 +1,11 @@
 clojure 1.10.3.1075
 dart 2.16.1
-elixir 1.14.1-otp-25
+elixir 1.15.0-otp-26
 elm 0.19.1
-erlang 25.1.2
+erlang 26.0
 golang 1.19
 lua 5.4.3
-nodejs 14.21.1
+nodejs 18.16.0
 python 3.10.2 2.7.18
 ruby 3.0.1
 rust 1.58.1
