@@ -26,7 +26,7 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-opera)
+(setq doom-theme 'doom-nord)
 
 ;; Here are some additional functions/macros that could help you configure Doom:
 ;;
@@ -63,9 +63,6 @@
 
 ;; make avy jump all windows
 (setq avy-all-windows t)
-
-(setq treemacs-git-mode 'deferred)
-(setq doom-themes-treemacs-theme "doom-colors")
 
 ;; use native MacOS fullscreen
 (setq ns-use-native-fullscreen t)
@@ -116,7 +113,13 @@ e: ${title}\n")
 
 (set-lookup-handlers! 'tide-mode :async t
   :definition #'tide-jump-to-definition)
+
 (setenv "NODE_OPTIONS" "--max-old-space-size=8192")
+
+;; for improving LSP performance
+(setq gc-cons-threshold 100000000)
+(setq read-process-output-max (* 1024 1024)) ;; 1mb
+(setq! lsp-clients-typescript-max-ts-server-memory 8092)
 
 (map! :after js2-mode
       :localleader
@@ -190,6 +193,24 @@ e: ${title}\n")
 (setq-hook! 'rjsx-mode-hook +format-with-lsp nil)
 (setq-hook! 'json-mode-hook +format-with-lsp nil)
 (setq-hook! 'json-mode-hook +format-with 'prettier)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;        COPILOT         ;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; accept completion from copilot and fallback to company
+;; complete by copilot first, then company-mode
+(defun my-tab ()
+  (interactive)
+  (or (copilot-accept-completion)
+      (company-indent-or-complete-common nil)))
+
+(use-package! copilot
+  :hook (prog-mode . copilot-mode)
+  :bind (:map copilot-completion-map
+              ("<tab>" . 'my-tab)
+              ("TAB" . 'my-tab)
+              ("C-TAB" . 'my-tab)
+              ("C-<tab>" . 'my-tab)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;       POLYMODE         ;;;
