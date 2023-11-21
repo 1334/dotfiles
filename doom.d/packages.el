@@ -55,3 +55,5 @@
 (package! lsp-tailwindcss :recipe (:host github :repo "merrickluo/lsp-tailwindcss"))
 (package! copilot
   :recipe (:host github :repo "zerolfx/copilot.el" :files ("*.el" "dist")))
+(package! heex-ts-mode)
+(package! elixir-ts-mode)

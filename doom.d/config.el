@@ -79,6 +79,7 @@
 (map! "C-{" #'centaur-tabs-backward)
 (map! "C-M-{" #'centaur-tabs-move-current-tab-to-left)
 (map! "C-M-}" #'centaur-tabs-move-current-tab-to-right)
+(map! :i "M-RET" #'company-complete-selection)
 
 (map! :n "gV" #'xref-find-definitions-other-window) ;; also mapped to C-x 4 .
 
@@ -139,30 +140,37 @@ e: ${title}\n")
        :desc "test at line" :nve "l" #'jest-function
        :desc "all" :nve "a" #'jest))
 
-(use-package! tide
-  :config
-  (map! :localleader
-        :map tide-mode-map
-        :desc "tide fix" :nve "." #'tide-fix))
+;; (use-package! tide
+;;   :config
+;;   (map! :localleader
+;;         :map tide-mode-map
+;;         :desc "tide fix" :nve "." #'tide-fix))
 
+(add-hook 'typescript-mode-hook
+          (lambda () (add-hook 'before-save-hook #'lsp-eslint-apply-all-fixes -99 'local)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;       ELIXIR           ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(define-derived-mode heex-mode web-mode "HEEx"
-                     "Major mode for editing HEEx files")
+(use-package! heex-ts-mode)
+(use-package! elixir-ts-mode
+  :mode "\\.heex\\'")
 
-(add-to-list 'auto-mode-alist '("\\.heex\\'" . heex-mode))
+;; (define-derived-mode heex-mode web-mode "HEEx"
+;;                      "Major mode for editing HEEx files")
 
-(add-hook 'heex-mode-hook #'lsp)
+;; (add-to-list 'auto-mode-alist '("\\.heex\\'" . heex-mode))
+;; (add-to-list 'auto-mode-alist '("\\.webmanifest\\'" . json-mode))
 
-;; add heex files to html lsp mode
-(after! lsp-mode (add-to-list 'lsp-language-id-configuration '(heex-mode . "html")))
+;; (add-hook 'heex-mode-hook #'lsp)
 
-;; save heex files using the elixir formatter
-(add-hook 'heex-mode-hook
-          (lambda () (add-hook 'before-save-hook #'elixir-format nil 'local)))
+;; ;; add heex files to html lsp mode
+;; (after! lsp-mode (add-to-list 'lsp-language-id-configuration '(heex-mode . "html")))
+
+;; ;; save heex files using the elixir formatter
+;; (add-hook 'heex-mode-hook
+;;           (lambda () (add-hook 'before-save-hook #'elixir-format nil 'local)))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -171,7 +179,6 @@ e: ${title}\n")
 (use-package! lsp-tailwindcss
   :init
   (setq lsp-tailwindcss-add-on-mode t)
-  (add-hook 'before-save-hook 'lsp-tailwindcss-rustywind-before-save)
   :config
   (add-to-list 'lsp-tailwindcss-major-modes 'typescript-tsx-mode :append)
   (add-to-list 'lsp-tailwindcss-major-modes 'elixir-mode :append)
@@ -180,7 +187,7 @@ e: ${title}\n")
   :after (lsp-mode))
 
 (set-docsets! '(web-mode css-mode rjsx-mode typescript-tsx-mode heex-mode)
-              :add "Tailwind_CSS")
+  :add "Tailwind_CSS")
 
 
 (setq! lsp-html-format-enable -1)
@@ -189,10 +196,14 @@ e: ${title}\n")
 (setq-hook! 'yaml-mode-hook +format-with-lsp nil)
 (setq-hook! 'javascript-mode-hook +format-with-lsp nil)
 (setq-hook! 'typescript-mode-hook +format-with-lsp nil)
+
 (setq-hook! 'typescript-tsx-mode-hook +format-with-lsp nil)
 (setq-hook! 'rjsx-mode-hook +format-with-lsp nil)
 (setq-hook! 'json-mode-hook +format-with-lsp nil)
-(setq-hook! 'json-mode-hook +format-with 'prettier)
+
+;; (setq-hook! 'javascript-mode-hook +format-with 'prettier)
+;; (setq-hook! 'typescript-mode-hook +format-with 'prettier)
+;; (setq-hook! 'json-mode-hook +format-with 'prettier)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;        COPILOT         ;;;
@@ -215,25 +226,43 @@ e: ${title}\n")
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;       POLYMODE         ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(use-package! polymode
-  :config
-  (define-hostmode poly-elixir-hostmode :mode 'elixir-mode)
-  (define-innermode poly-elixir-innermode
-    :mode 'heex-mode
-    :head-matcher (rx line-start (* space) "~H" (= 3 (char "\"")) line-end)
-    :tail-matcher (rx line-start (* space) (= 3 (char "\"")) line-end)
-    :head-mode 'host
-    :tail-mode 'host
-    :allow-nested nil)
-  (define-polymode poly-elixir-mode
-    :hostmode 'poly-elixir-hostmode
-    :innermodes '(poly-elixir-innermode))
-  (add-to-list 'auto-mode-alist '("\\.ex?\\'" . poly-elixir-mode))
-  (add-to-list 'polymode-run-these-after-change-functions-in-other-buffers 'lsp-on-change)
-  (add-to-list 'polymode-run-these-before-change-functions-in-other-buffers 'lsp-before-change)
-  )
+;; (use-package! polymode
+;;   :config
+;;   (define-hostmode poly-elixir-hostmode :mode 'elixir-mode)
+;;   (define-innermode poly-elixir-innermode
+;;     :mode 'heex-mode
+;;     :head-matcher (rx line-start (* space) "~H" (= 3 (char "\"")) line-end)
+;;     :tail-matcher (rx line-start (* space) (= 3 (char "\"")) line-end)
+;;     :head-mode 'host
+;;     :tail-mode 'host
+;;     :allow-nested nil)
+;;   (define-polymode poly-elixir-mode
+;;     :hostmode 'poly-elixir-hostmode
+;;     :innermodes '(poly-elixir-innermode))
+;;   (add-to-list 'auto-mode-alist '("\\.ex?\\'" . poly-elixir-mode))
+;;   (add-to-list 'polymode-run-these-after-change-functions-in-other-buffers 'lsp-on-change)
+;;   (add-to-list 'polymode-run-these-before-change-functions-in-other-buffers 'lsp-before-change)
+;;   )
 
 ;; workaround for polymode described
 ;; https://github.com/polymode/polymode/issues/316
-(setq-hook! elixir-mode polymode-lsp-integration nil)
-(setq-hook! heex-mode polymode-lsp-integration nil)
+;; (setq-hook! elixir-mode polymode-lsp-integration nil)
+;; (setq-hook! heex-mode polymode-lsp-integration nil)
+
+;; (use-package! polymode
+;;   :config
+;;   (define-hostmode poly-rjsx-hostmode :mode 'rjsx-mode)
+;;   (define-innermode poly-rjsx-cssinjs-innermode
+;;     :mode 'css-mode
+;;     :head-matcher "\\(styled\\|css\\)[.()<>[:alnum:]]?+`"
+;;     :tail-matcher "\`"
+;;     :head-mode 'host
+;;     :tail-mode 'host
+;;     :keep-in-mode 'host
+;;     :fallback-mode 'host)
+;;   (define-polymode poly-rjsx-mode
+;;     :hostmode 'poly-rjsx-hostmode
+;;     :innermodes '(poly-rjsx-cssinjs-innermode))
+;;   :hook
+;;   ((rjsx-mode) . poly-rjsx-mode)
+;;   )
