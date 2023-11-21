@@ -9,7 +9,8 @@ eval "$(/opt/homebrew/bin/brew shellenv)"
 source $(brew --prefix asdf)/libexec/asdf.sh
 
 # custom PATH
-export PATH="$(yarn global bin):$HOME/.elixir-ls/release:$HOME/bin:/usr/local/bin:/usr/local/sbin:$HOME/.cargo/bin:$HOME/.emacs.d/bin:$HOME/.emacses/doom/doom-emacs/bin:$HOME/.local/bin:$PATH"
+export PATH="/opt/homebrew/opt/postgresql@15/bin:$PATH:$HOME/Library/pnpm:$HOME/.elixir-ls/release:$HOME/bin:/usr/local/bin:/usr/local/sbin:$PATH"
+export PATH="$HOME/.cargo/bin:$HOME/.emacs.d/bin:$HOME/.emacses/doom/doom-emacs/bin:$HOME/.local/bin:$PATH"
 # needed for brew grep to replace system grep
 # for intel chips
 export PATH="/usr/local/opt/grep/libexec/gnubin:$PATH"
@@ -95,3 +96,17 @@ export KERL_BUILD_DOCS="yes"
 
 # hide macos deprectaion warning
 export BASH_SILENCE_DEPRECATION_WARNING=1
+
+# tabtab source for packages
+# uninstall by removing these lines
+[ -f ~/.config/tabtab/bash/__tabtab.bash ] && . ~/.config/tabtab/bash/__tabtab.bash || true
+# pnpm
+export PNPM_HOME="/Users/isp/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH=$BUN_INSTALL/bin:$PATH
