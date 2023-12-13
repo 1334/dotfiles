@@ -2,13 +2,13 @@ clojure 1.10.3.1075
 dart 2.16.1
 elixir 1.15.6-otp-26
 elm 0.19.1
-erlang 26.0.2
+erlang 26.1.2
 golang 1.19
 lua 5.4.3
-nodejs 18.17.1
+nodejs 18.18.2
 python 3.10.2 2.7.18
 ruby 3.0.1
-rust 1.58.1
+rust 1.74.0
 sbcl 2.2.6
 yarn 1.22.19
 haskell 9.4.4
