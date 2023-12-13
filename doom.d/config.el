@@ -122,6 +122,9 @@ e: ${title}\n")
 (setq read-process-output-max (* 1024 1024)) ;; 1mb
 (setq! lsp-clients-typescript-max-ts-server-memory 8092)
 
+(after! lsp-mode
+  (setq! lsp-eslint-auto-fix-on-save t))
+
 (map! :after js2-mode
       :localleader
       :map js2-mode-map
