@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-# asdf-plugin: python 2.7.18
-exec /opt/homebrew/opt/asdf/libexec/bin/asdf exec "python2" "$@"
