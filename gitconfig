@@ -1,6 +1,7 @@
 [user]
   name = Iñigo Solano
   email = i@errstate.com
+  signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOp6MirwZzuNLLAnllBL5CBnAEN5QyEdCdqpqj5UapLG
 
 [core]
 	excludesfile = ~/.gitignore_global
@@ -27,20 +28,35 @@
 
 [github]
   user = 1334
+
 [credential]
   helper = osxkeychain
+
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
 	path = 
+
 [mergetool "sourcetree"]
 	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true
+
 [pull]
 	ff = only
+
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
+
 [init]
 	defaultBranch = main
+
+[gpg]
+  format = ssh
+
+[gpg "ssh"]
+  program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
+
+[commit]
+  gpgsign = true
