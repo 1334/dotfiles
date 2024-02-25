@@ -75,6 +75,10 @@ swap_emacs () {
   fi
 }
 
+uuid () {
+  uuidgen | tr '[:upper:]' '[:lower:]'
+}
+
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f '/Users/isp/bin/google-cloud-sdk/path.bash.inc' ]; then . '/Users/isp/bin/google-cloud-sdk/path.bash.inc'; fi
 
