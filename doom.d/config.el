@@ -155,10 +155,12 @@ e: ${title}\n")
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;       ELIXIR           ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(use-package! heex-ts-mode)
-(use-package! elixir-ts-mode
-  :mode "\\.heex\\'")
+(after! lsp-mode
+  (lsp-register-client
+   (make-lsp-client :new-connection (lsp-stdio-connection '("nextls" "--stdio"))
+                    :multi-root t
+                    :activation-fn (lsp-activate-on "elixir")
+                    :server-id 'next-ls)))
 
 ;; (define-derived-mode heex-mode web-mode "HEEx"
 ;;                      "Major mode for editing HEEx files")
