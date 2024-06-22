@@ -114,3 +114,55 @@ esac
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH=$BUN_INSTALL/bin:$PATH
+
+
+function avg_commit_size_per_month() {
+    git log master --pretty=format:'%cd' --date=format:'%Y-%m' --shortstat | awk '
+    /^[0-9]/ {
+        date = $0
+    }
+    /insertions/ {
+        added += $4 + $6
+        count[date]++
+        insertions[date] += $4
+        deletions[date] += $6
+    }
+    END {
+        for (d in insertions) {
+            if (count[d] > 0) {
+                avg_lines = int((insertions[d] + deletions[d]) / count[d])
+                printf "%4d %s\n", avg_lines, d
+            }
+        }
+    }' | sort -k2,2
+}
+
+
+
+
+
+function count_tags_per_month() {
+    git tag --list --format='%(refname:short) %(creatordate:short)' | awk '{print $2}' | awk -F"-" '{print $1"-"$2}' | sort | uniq -c
+}
+
+function count_prs_per_month() {
+  git log --date=format:'%Y-%m' --pretty=format:'%ad' | sort | uniq -c
+}
+
+function count_prs_per_author_per_month() {
+  git log --date=format:'%Y-%m' --pretty=format:'%ad %an' | sort | uniq -c | awk '{print $2, $3, $1}' | sort
+}
+
+function cledara_stats() {
+    echo "Monthly Git Tag Count:"
+    count_tags_per_month
+    echo ""
+    echo "Average Commit Size Per Month on Master Branch:"
+    avg_commit_size_per_month
+    echo ""
+    echo "Monthly PR Count:"
+    count_prs_per_month
+    echo ""
+    echo "Monthly PR Count Per Author:"
+    count_prs_per_author_per_month
+}
