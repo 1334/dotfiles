@@ -142,12 +142,6 @@ e: ${title}\n")
        :desc "test at line" :nve "l" #'jest-function
        :desc "all" :nve "a" #'jest))
 
-;; (use-package! tide
-;;   :config
-;;   (map! :localleader
-;;         :map tide-mode-map
-;;         :desc "tide fix" :nve "." #'tide-fix))
-
 (mapc
  (lambda (language-mode-hook)
    (add-hook language-mode-hook
