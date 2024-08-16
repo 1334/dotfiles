@@ -226,43 +226,26 @@ e: ${title}\n")
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;       POLYMODE         ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; (use-package! polymode
-;;   :config
-;;   (define-hostmode poly-elixir-hostmode :mode 'elixir-mode)
-;;   (define-innermode poly-elixir-innermode
-;;     :mode 'heex-mode
-;;     :head-matcher (rx line-start (* space) "~H" (= 3 (char "\"")) line-end)
-;;     :tail-matcher (rx line-start (* space) (= 3 (char "\"")) line-end)
-;;     :head-mode 'host
-;;     :tail-mode 'host
-;;     :allow-nested nil)
-;;   (define-polymode poly-elixir-mode
-;;     :hostmode 'poly-elixir-hostmode
-;;     :innermodes '(poly-elixir-innermode))
-;;   (add-to-list 'auto-mode-alist '("\\.ex?\\'" . poly-elixir-mode))
-;;   (add-to-list 'polymode-run-these-after-change-functions-in-other-buffers 'lsp-on-change)
-;;   (add-to-list 'polymode-run-these-before-change-functions-in-other-buffers 'lsp-before-change)
-;;   )
+(use-package! polymode
+  :config
+  ;; Define the Elixir polymode
+  (define-hostmode poly-elixir-hostmode
+    :mode 'elixir-ts-mode)
 
-;; workaround for polymode described
-;; https://github.com/polymode/polymode/issues/316
-;; (setq-hook! elixir-mode polymode-lsp-integration nil)
-;; (setq-hook! heex-mode polymode-lsp-integration nil)
+  ;; Define an innermode for the ~H""" ... """ blocks using web-mode
+  (define-innermode poly-elixir-html-innermode
+    :mode 'heex-ts-mode
+    :head-matcher "~H\"\"\""
+    :tail-matcher "\"\"\""
+    :head-mode 'host
+    :tail-mode 'host
+    :allow-nested nil
+    :indent-offset 2)
 
-;; (use-package! polymode
-;;   :config
-;;   (define-hostmode poly-rjsx-hostmode :mode 'rjsx-mode)
-;;   (define-innermode poly-rjsx-cssinjs-innermode
-;;     :mode 'css-mode
-;;     :head-matcher "\\(styled\\|css\\)[.()<>[:alnum:]]?+`"
-;;     :tail-matcher "\`"
-;;     :head-mode 'host
-;;     :tail-mode 'host
-;;     :keep-in-mode 'host
-;;     :fallback-mode 'host)
-;;   (define-polymode poly-rjsx-mode
-;;     :hostmode 'poly-rjsx-hostmode
-;;     :innermodes '(poly-rjsx-cssinjs-innermode))
-;;   :hook
-;;   ((rjsx-mode) . poly-rjsx-mode)
-;;   )
+  ;; Define the polymode that ties everything together
+  (define-polymode poly-elixir-mode
+    :hostmode 'poly-elixir-hostmode
+    :innermodes '(poly-elixir-html-innermode))
+
+  ;; Enable the polymode in elixir-ts-mode buffers
+  (add-hook 'elixir-ts-mode-hook #'poly-elixir-mode))
