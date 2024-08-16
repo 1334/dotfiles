@@ -64,6 +64,8 @@
 ;; make avy jump all windows
 (setq avy-all-windows t)
 
+(setq! debug-on-error nil)
+
 ;; use native MacOS fullscreen
 (setq ns-use-native-fullscreen t)
 (add-hook 'window-setup-hook 'toggle-frame-fullscreen t)
@@ -112,9 +114,6 @@ e: ${title}\n")
 ;;;       JS / TS          ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(set-lookup-handlers! 'tide-mode :async t
-  :definition #'tide-jump-to-definition)
-
 (setenv "NODE_OPTIONS" "--max-old-space-size=8192")
 
 ;; for improving LSP performance
@@ -149,8 +148,11 @@ e: ${title}\n")
 ;;         :map tide-mode-map
 ;;         :desc "tide fix" :nve "." #'tide-fix))
 
-(add-hook 'typescript-mode-hook
-          (lambda () (add-hook 'before-save-hook #'lsp-eslint-apply-all-fixes -99 'local)))
+(mapc
+ (lambda (language-mode-hook)
+   (add-hook language-mode-hook
+             (lambda () (add-hook 'before-save-hook #'lsp-eslint-apply-all-fixes -99 'local))))
+ '(typescript-mode-hook typescript-tsx-mode-hook))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;       ELIXIR           ;;;
@@ -213,20 +215,13 @@ e: ${title}\n")
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;        COPILOT         ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; accept completion from copilot and fallback to company
-;; complete by copilot first, then company-mode
-(defun my-tab ()
-  (interactive)
-  (or (copilot-accept-completion)
-      (company-indent-or-complete-common nil)))
-
 (use-package! copilot
   :hook (prog-mode . copilot-mode)
   :bind (:map copilot-completion-map
-              ("<tab>" . 'my-tab)
-              ("TAB" . 'my-tab)
-              ("C-TAB" . 'my-tab)
-              ("C-<tab>" . 'my-tab)))
+              ("<tab>" . 'copilot-accept-completion)
+              ("TAB" . 'copilot-accept-completion)
+              ("C-TAB" . 'copilot-accept-completion-by-word)
+              ("C-<tab>" . 'copilot-accept-completion-by-word)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;       POLYMODE         ;;;
