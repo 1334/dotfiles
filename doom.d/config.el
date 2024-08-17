@@ -88,32 +88,17 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;       ORG MODE         ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;; If you use `org' and don't want your org files in the default location below,
-;; change `org-directory'. It must be set before org loads!
 (use-package! org
   :custom
   (org-directory "~/org/"))
 
 (use-package! org-roam
   :custom
-  (org-roam-directory "~/roam")
-  (org-roam-capture-templates
-   '(("d" "default" plain "%?" :target
-      (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
-      :unnarrowed t)
-     ("l" "programming language" plain
-      (file "~/roam/templates/programming_language.org")
-      :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+titl
-e: ${title}\n")
-      :unnarrowed t)
-     )))
-
+  (org-roam-directory "~/roam"))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;       JS / TS          ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
 (setenv "NODE_OPTIONS" "--max-old-space-size=8192")
 
 ;; for improving LSP performance
