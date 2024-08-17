@@ -179,17 +179,10 @@ e: ${title}\n")
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (use-package! lsp-tailwindcss
   :init
-  (setq lsp-tailwindcss-add-on-mode t)
+  (setq lsp-tailwindcss-add-on-mode t) ;; Enable Tailwind CSS add-on mode
   :config
-  (add-to-list 'lsp-tailwindcss-major-modes 'typescript-tsx-mode :append)
-  (add-to-list 'lsp-tailwindcss-major-modes 'elixir-mode :append)
-  (add-to-list 'lsp-tailwindcss-major-modes 'heex-mode :append)
-  (add-to-list 'lsp-tailwindcss-major-modes 'web-mode :append)
-  :after (lsp-mode))
-
-(set-docsets! '(web-mode css-mode rjsx-mode typescript-tsx-mode heex-mode)
-  :add "Tailwind_CSS")
-
+  (add-to-list 'lsp-tailwindcss-major-modes 'elixir-ts-mode)
+  (add-to-list 'lsp-tailwindcss-major-modes 'heex-ts-mode))
 
 (setq! lsp-html-format-enable -1)
 
