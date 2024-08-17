@@ -36,7 +36,6 @@
        ;; doom-quit        ; DOOM quit-message prompts when you quit Emacs
        (emoji +unicode +github)    ; 🙂
        hl-todo             ; highlight TODO/FIXME/NOTE/DEPRECATED/HACK/REVIEW
-       ;;hydra
        ;;indent-guides     ; highlighted indent columns
        ;;ligatures         ; ligatures and symbols to make your code pretty again
        ;;minimap           ; show a map of the code on the side
@@ -48,10 +47,10 @@
        tabs                ; a tab bar for Emacs
        (treemacs)     ; a project drawer, like neotree but cooler
        unicode             ; extended unicode support for various languages
+       (vc-gutter +pretty) ; vcs diff in the fringe
        vi-tilde-fringe     ; fringe tildes to mark beyond EOB
        (window-select +numbers)       ; visually switch windows
        workspaces          ; tab emulation, persistence & separate workspaces
-       (vc-gutter +pretty) ; vcs diff in the fringe
        ;;zen               ; distraction-free coding or writing
 
        :editor
@@ -103,16 +102,14 @@
        ;;pass              ; password manager for nerds
        ;;pdf               ; pdf enhancements
        ;;prodigy           ; FIXME managing external services & code builders
-       ;;rgb               ; creating color strings
-       ;;taskrunner        ; taskrunner for all your projects
        terraform           ; infrastructure as code
        ;;tmux              ; an API for interacting with tmux
        tree-sitter         ; syntax and parsing, sitting in a tree...
        ;;upload            ; map local to remote projects via ssh/ftp
 
        :os
-       (tty +osc)          ; improve the terminal Emacs experience
        (:if (featurep :system 'macos) macos)  ; improve compatibility with macOS
+       (tty +osc)          ; improve the terminal Emacs experience
 
        :lang
        ;;agda              ; types of types of types of types...
@@ -189,7 +186,6 @@
        ;;everywhere        ; *leave* Emacs!? You must be joking
        ;;irc               ; how neckbeards socialize
        ;;(rss +org)        ; emacs as an RSS reader
-       ;;twitter           ; twitter client https://twitter.com/vnought
 
        :config
        ;;literate
