@@ -28,6 +28,11 @@
 ;; `load-theme' function. This is the default:
 (setq doom-theme 'doom-nord)
 
+(when (string-equal doom-theme 'doom-nord)
+  (custom-set-faces!
+    '(font-lock-comment-face :foreground "#b0b0b0")
+    '(font-lock-doc-face :foreground "#b0b0b0")))
+
 ;; Here are some additional functions/macros that could help you configure Doom:
 ;;
 ;; - `load!' for loading external *.el files relative to this one
