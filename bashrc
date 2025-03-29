@@ -9,13 +9,21 @@ eval "$(/opt/homebrew/bin/brew shellenv)"
 source $(brew --prefix asdf)/libexec/asdf.sh
 
 # custom PATH
-export PATH="/opt/homebrew/opt/postgresql@15/bin:$PATH:$HOME/Library/pnpm:$HOME/.elixir-ls/release:$HOME/bin:/usr/local/bin:/usr/local/sbin:$PATH"
-export PATH="$HOME/.cargo/bin:$HOME/.emacs.d/bin:$HOME/.emacses/doom/doom-emacs/bin:$HOME/.local/bin:$PATH"
+export PATH="/opt/homebrew/opt/postgresql@17/bin:$PATH:$HOME/Library/pnpm:$HOME/.elixir-ls/release:$HOME/bin:/usr/local/bin:/usr/local/sbin:$PATH"
+export PATH="$HOME/.cargo/bin:$HOME/.emacs.d/bin:$HOME/.config/emacs/bin:$HOME/.local/bin:$PATH"
 # needed for brew grep to replace system grep
 # for intel chips
 export PATH="/usr/local/opt/grep/libexec/gnubin:$PATH"
 # for M1 chips
 export PATH="/opt/homebrew/opt/grep/libexec/gnubin:$PATH"
+# rebar 3 path
+export PATH="$HOME/.cache/rebar3/bin:/opt/homebrew/opt/openjdk/bin:$PATH"
+# use brew's curl first
+export PATH="/opt/homebrew/opt/curl/bin:$PATH"
+# Add shims directory to path
+export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
+# asdf comppletion
+. <(asdf completion bash)
 
 # enable iex shell history
 export ERL_AFLAGS="-kernel shell_history enabled"
@@ -166,3 +174,4 @@ function cledara_stats() {
     echo "Monthly PR Count Per Author:"
     count_prs_per_author_per_month
 }
+export PATH="/opt/homebrew/opt/sqlite/bin:$PATH"
