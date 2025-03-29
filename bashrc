@@ -175,3 +175,31 @@ function cledara_stats() {
     count_prs_per_author_per_month
 }
 export PATH="/opt/homebrew/opt/sqlite/bin:$PATH"
+
+# for emacs performance
+export LSP_USE_PLISTS=true
+
+function cledara_db() {
+    case "$1" in
+        rr)
+            tunnel_cmd="~/cledara/scripts/ssm/aws_ssm_tunnel.sh -e prod -t read-replica"
+            ;;
+        prod)
+            tunnel_cmd="~/cledara/scripts/ssm/aws_ssm_tunnel.sh -e prod"
+            ;;
+        cop)
+            tunnel_cmd="~/cledara/scripts/ssm/aws_ssm_tunnel.sh -e db-copy-prod"
+            ;;
+        *)
+            echo "Usage: cledara_db <option>"
+            echo "Options:"
+            echo "  rr   - Connect to read-replica"
+            echo "  prod - Connect to production DB"
+            echo "  cop  - Connect to db-copy-prod"
+            return 1
+            ;;
+    esac
+
+    aws-sso exec --account 831111595831 --role AdministratorAccess
+    eval "$tunnel_cmd"
+}
