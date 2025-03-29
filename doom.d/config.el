@@ -16,12 +16,15 @@
 ;; + `doom-variable-pitch-font'
 ;; + `doom-big-font' -- used for `doom-big-font-mode'; use this for
 ;;   presentations or streaming.
-;;
+(setq doom-font (font-spec :family "JetBrains Mono" :size 14 :weight 'light)
+      doom-variable-pitch-font (font-spec :family "JetBrains Mono" :size 14 :weight 'light))
+;; Increase line spacing
+(setq-default line-spacing 0.11)
 ;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
 ;; font string. You generally only need these two:
 ;; (setq doom-font (font-spec :family "monospace" :size 12 :weight 'semi-light)
 ;;       doom-variable-pitch-font (font-spec :family "sans" :size 13))
-(set-face-attribute 'default nil :height 130)
+;; (set-face-attribute 'default nil :height 130)
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
@@ -90,6 +93,9 @@
 
 (map! :n "gV" #'xref-find-definitions-other-window) ;; also mapped to C-x 4 .
 
+(setq major-mode-remap-alist
+      '((elixir-mode . elixir-ts-mode)))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;       ORG MODE         ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -107,8 +113,8 @@
 (setenv "NODE_OPTIONS" "--max-old-space-size=8192")
 
 ;; for improving LSP performance
-(setq gc-cons-threshold 100000000)
-(setq read-process-output-max (* 1024 1024)) ;; 1mb
+(setq gc-cons-threshold 200000000)
+(setq read-process-output-max (* 10 1024 1024)) ;; 10mb
 (setq! lsp-clients-typescript-max-ts-server-memory 8092)
 
 (after! lsp-mode
@@ -138,56 +144,40 @@
              (lambda () (add-hook 'before-save-hook #'lsp-eslint-apply-all-fixes -99 'local))))
  '(typescript-mode-hook typescript-tsx-mode-hook))
 
+;; use typescript mode for mts files
+(add-to-list 'auto-mode-alist '("\\.mts?\\'" . typescript-mode))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;       ELIXIR           ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; Currently elixir congfig is in a custom doom module in modules/lang/elixir
+(add-to-list 'auto-mode-alist '("\\.heex?\\'" . heex-ts-mode))
+
+;; disable eslint lsp for heex buffers
 (after! lsp-mode
-  (lsp-register-client
-   (make-lsp-client :new-connection (lsp-stdio-connection '("nextls" "--stdio"))
-                    :multi-root t
-                    :activation-fn (lsp-activate-on "elixir")
-                    :server-id 'next-ls)))
-
-;; (define-derived-mode heex-mode web-mode "HEEx"
-;;                      "Major mode for editing HEEx files")
-
-;; (add-to-list 'auto-mode-alist '("\\.heex\\'" . heex-mode))
-;; (add-to-list 'auto-mode-alist '("\\.webmanifest\\'" . json-mode))
-
-;; (add-hook 'heex-mode-hook #'lsp)
-
-;; ;; add heex files to html lsp mode
-;; (after! lsp-mode (add-to-list 'lsp-language-id-configuration '(heex-mode . "html")))
-
-;; ;; save heex files using the elixir formatter
-;; (add-hook 'heex-mode-hook
-;;           (lambda () (add-hook 'before-save-hook #'elixir-format nil 'local)))
-
+  ;; Override the client activation for eslint in heex-ts-mode
+  (add-to-list 'lsp-disabled-clients '(heex-ts-mode . eslint)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;         WEB            ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (use-package! lsp-tailwindcss
-  :init
-  (setq lsp-tailwindcss-add-on-mode t) ;; Enable Tailwind CSS add-on mode
+  :init (setq lsp-tailwindcss-add-on-mode t)
   :config
-  (add-to-list 'lsp-tailwindcss-major-modes 'elixir-ts-mode)
-  (add-to-list 'lsp-tailwindcss-major-modes 'heex-ts-mode))
-
-(setq! lsp-html-format-enable -1)
-
-(setq-hook! 'html-mode-hook +format-with-lsp nil)
-(setq-hook! 'yaml-mode-hook +format-with-lsp nil)
-(setq-hook! 'javascript-mode-hook +format-with-lsp nil)
-(setq-hook! 'typescript-mode-hook +format-with-lsp nil)
-
-(setq-hook! 'typescript-tsx-mode-hook +format-with-lsp nil)
-(setq-hook! 'rjsx-mode-hook +format-with-lsp nil)
-(setq-hook! 'json-mode-hook +format-with-lsp nil)
-
-;; (setq-hook! 'javascript-mode-hook +format-with 'prettier)
-;; (setq-hook! 'typescript-mode-hook +format-with 'prettier)
-;; (setq-hook! 'json-mode-hook +format-with 'prettier)
+  (dolist (tw-major-mode
+           '(css-mode
+             css-ts-mode
+             typescript-mode
+             typescript-ts-mode
+             typescript-tsx-mode
+             tsx-ts-mode
+             js2-mode
+             js-ts
+             elixir-ts-mode
+             heex-ts-mode
+             clojure-mode))
+    (add-to-list 'lsp-tailwindcss-major-modes tw-major-mode)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;        COPILOT         ;;;
@@ -203,26 +193,26 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;       POLYMODE         ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(use-package! polymode
-  :config
-  ;; Define the Elixir polymode
-  (define-hostmode poly-elixir-hostmode
-    :mode 'elixir-ts-mode)
+;; (use-package! polymode
+;;   :config
+;;   ;; Define the Elixir polymode
+;;   (define-hostmode poly-elixir-hostmode
+;;     :mode 'elixir-ts-mode)
 
-  ;; Define an innermode for the ~H""" ... """ blocks using web-mode
-  (define-innermode poly-elixir-html-innermode
-    :mode 'heex-ts-mode
-    :head-matcher "~H\"\"\""
-    :tail-matcher "\"\"\""
-    :head-mode 'host
-    :tail-mode 'host
-    :allow-nested nil
-    :indent-offset 2)
+;;   ;; Define an innermode for the ~H""" ... """ blocks using web-mode
+;;   (define-innermode poly-elixir-html-innermode
+;;     :mode 'heex-ts-mode
+;;     :head-matcher "~H\"\"\""
+;;     :tail-matcher "\"\"\""
+;;     :head-mode 'host
+;;     :tail-mode 'host
+;;     :allow-nested nil
+;;     :indent-offset 2)
 
-  ;; Define the polymode that ties everything together
-  (define-polymode poly-elixir-mode
-    :hostmode 'poly-elixir-hostmode
-    :innermodes '(poly-elixir-html-innermode))
+;;   ;; Define the polymode that ties everything together
+;;   (define-polymode poly-elixir-mode
+;;     :hostmode 'poly-elixir-hostmode
+;;     :innermodes '(poly-elixir-html-innermode))
 
-  ;; Enable the polymode in elixir-ts-mode buffers
-  (add-hook 'elixir-ts-mode-hook #'poly-elixir-mode))
+;;   ;; Enable the polymode in elixir-ts-mode buffers
+;;   (add-hook 'elixir-ts-mode-hook #'poly-elixir-mode))
